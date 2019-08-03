@@ -1,5 +1,17 @@
 <?php
 
+function CourseTime($course){
+    if($course == "B.TECH.")
+        return 4;
+    else if($course=="M.TECH.")
+        return 2;
+    else if($course=="Dual Degree")
+        return 5;
+    else if($course=="M.Sc.")
+        return 2;
+    return 0;
+}
+
 require('../fpdf181/fpdf.php');
 
 $borders = 0;
@@ -86,19 +98,16 @@ $pdf->Cell(15,4,"Gender :",$borders,0,'R');
 $pdf->SetFont('Courier');
 $pdf->SetTextColor(50);
 $pdf->Cell(44,4,$_POST["gender"],$borders,1,'L');
-/*
+
 $pdf->SetXY(5,30);
 $pdf->SetFont('Times');
 $pdf->SetTextColor(0);
-$pdf->Cell(15,4,"Age :",$borders,0,'R');
+$pdf->Cell(15,4,"Exp. Grad. :",$borders,0,'R');
 $pdf->SetFont('Courier');
 $pdf->SetTextColor(50);
-$diff = date_diff(date_create($_POST["dob"]),date_create(date("Y-m-d")));
-$pdf->Cell(44,4,$diff->format('%y'),$borders,1,'L');
+$yog = $_POST["yoj"]+CourseTime($_POST["course"]);
+$pdf->Cell(44,4,$yog,$borders,1,'L');
 
-Can't have age in ID Card
-
-*/
 $pdf->SetXY(5,34);
 $pdf->SetFont('Times');
 $pdf->SetTextColor(0);
