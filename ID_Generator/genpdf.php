@@ -102,7 +102,7 @@ $pdf->Cell(44,4,$_POST["gender"],$borders,1,'L');
 $pdf->SetXY(5,30);
 $pdf->SetFont('Times');
 $pdf->SetTextColor(0);
-$pdf->Cell(15,4,"Exp. Grad. :",$borders,0,'R');
+$pdf->Cell(15,4,"Valid Upto :",$borders,0,'R');
 $pdf->SetFont('Courier');
 $pdf->SetTextColor(50);
 $yog = $_POST["yoj"]+CourseTime($_POST["course"]);
