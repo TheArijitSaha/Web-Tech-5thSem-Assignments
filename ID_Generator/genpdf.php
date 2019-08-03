@@ -17,10 +17,10 @@ if($borders==1)
     $pdf->Rect(4,4,82,47);
 
 $pdf->SetFillColor(21,86,92);
-$pdf->Rect(1.5,1.5,87.25,11,'F');
-$pdf->Rect(1.5,50.5,87.25,3.25,'F');
+$pdf->Rect(1.3,1.25,87.45,11,'F');
+$pdf->Rect(1.3,50.75,87.45,3.25,'F');
 $pdf->SetFillColor(186,242,247);
-$pdf->Rect(1.5,12.5,87.25,38.25,'F');
+$pdf->Rect(1.3,12.25,87.45,38.5,'F');
 
 $pdf->SetXY(4,4);
 $pdf->SetFontSize(10.1);
