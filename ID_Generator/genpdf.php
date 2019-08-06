@@ -30,7 +30,7 @@ if($borders==1)
 
 $pdf->SetFillColor(21,86,92);
 $pdf->Rect(1.3,1.25,87.45,11,'F');
-$pdf->Rect(1.3,50.75,87.45,3.25,'F');
+$pdf->Rect(1.3,50.75,87.45,2.95,'F');
 $pdf->SetFillColor(186,242,247);
 $pdf->Rect(1.3,12.25,87.45,38.5,'F');
 
@@ -122,8 +122,8 @@ $pdf->SetFontSize(9);
 
 $pdf->SetLineWidth(1);
 $pdf->Rect(65,30,20,20);
-$pdf->Image($_FILES['profile']['tmp_name'],65,30,20,20,end(explode(".",$_FILES["profile"]["name"])));
-
-$pdf->Output();
+$split_name=explode(".",$_FILES["profile"]["name"]);
+$pdf->Image($_FILES['profile']['tmp_name'],65,30,20,20,end($split_name));
+$pdf->Output('I','ID - '.$_POST["name"].'.pdf');
 
 ?>

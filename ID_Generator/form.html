@@ -12,56 +12,99 @@
             </div>
             <div class="container">
                 <form method="POST" action="genpdf.php" enctype="multipart/form-data">
-                    <label for="name">Name:</label>
-                    <input type="text" name="name" placeholder="Enter Name">
-                    <p></p>
 
-                    <label for="dob">Date of Birth:</label>
-                    <input type="date" name="dob">
-                    <p></p>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input class="form-control" type="text" name="name" placeholder="Enter Name" required>
+                            </div>
+                        </div>
 
-                    <label for="yoj">Year of Joining:</label>
-                    <input type="number" min="1856" step="1" max="2019" name="yoj" placeholder="Enter your Year of Joining">
-                    <p></p>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="dob">Date of Birth:</label>
+                                <input class="form-control" type="date" name="dob" required>
+                            </div>
+                        </div>
+                    </div>
 
-                    <label for="course">Course:</label>
-                    <select name="course">
-                        <option value="B.TECH.">B.Tech.</option>
-                        <option value="M.TECH.">M.Tech.</option>
-                        <option value="Dual Degree">Dual Degree</option>
-                        <option value="M.Sc.">M.Sc.</option>
-                    </select>
-                    <p></p>
 
-                    <label for="gender">Gender:</label>
-                    <input type="radio" name="gender" value="Male">Male
-                    <input type="radio" name="gender" value="Female">Female
-                    <input type="radio" name="gender" value="Other">Other
-                    <p></p>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="yoj">Year of Joining:</label>
+                                <input class="form-control" type="number" min="1856" step="1" max="2019" name="yoj" placeholder="Enter your Year of Joining" required>
+                            </div>
+                        </div>
 
-                    <label for="bloodgroup">Blood Group:</label>
-                    <select name="bloodgroup">
-                        <option value="B+">B+</option>
-                        <option value="AB+">AB+</option>
-                        <option value="O+">O+</option>
-                        <option value="A+">A+</option>
-                        <option value="B-">B-</option>
-                        <option value="AB-">AB-</option>
-                        <option value="O-">O-</option>
-                        <option value="A-">A-</option>
-                    </select>
-                    <p></p>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="course">Course:</label>
+                                <select class="form-control" name="course">
+                                    <option value="B.TECH.">B.Tech.</option>
+                                    <option value="M.TECH.">M.Tech.</option>
+                                    <option value="Dual Degree">Dual Degree</option>
+                                    <option value="M.Sc.">M.Sc.</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 
-                    <label for="address">Address:</label>
-                    <input type="textarea" name="address" placeholder="Enter your current address">
-                    <p></p>
 
-                    <label for="profile">Profile Picture</label>
-                    <input type="file" name="profile">
-                    <p></p>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="bloodgroup">Blood Group:</label>
+                                <select class="form-control" name="bloodgroup">
+                                    <option value="B+">B+</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="O+">O+</option>
+                                    <option value="A+">A+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O-">O-</option>
+                                    <option value="A-">A-</option>
+                                </select>
+                            </div>
+                        </div>
 
-                    <p></p>
-                    <input class="btn btn-success" type="submit" name="submit" value="Generate ID Card">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="radio" for="gender">Gender:</label>
+                                <div class="container">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" value="Male" required>
+                                        <label class="form-check-label" for="gender">Male</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" value="Female">
+                                        <label class="form-check-label" for="gender">Female</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" value="Other">
+                                        <label class="form-check-label" for="gender">Other</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Address:</label>
+                        <input class="form-control" type="textarea" name="address" placeholder="Enter your current address" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profile">Profile Picture:</label>
+                        <input class="form-control-file" type="file" name="profile" required>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <input class="btn btn-success" type="submit" name="submit" value="Generate ID Card PDF">
+                        <input class="btn btn-success" type="submit" name="submit" formaction="genimage.php" value="Generate ID Card PNG">
+                        <input class="btn btn-danger" type="reset" name="reset" value="Reset">
+                    </div>
                 </form>
             </div>
         </div>
