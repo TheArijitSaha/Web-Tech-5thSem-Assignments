@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 function CourseTime($course){
     if($course == "B.TECH.")
@@ -58,7 +59,7 @@ $pdf->SetFont('Times');
 $pdf->Cell(15,4,"Name :",$borders,0,'R');
 $pdf->SetFont('Courier');
 $pdf->SetTextColor(50);
-$pdf->Cell(65,4,strtoupper($_POST["name"]),$borders,1,'L');
+$pdf->Cell(65,4,strtoupper($_SESSION["name"]),$borders,1,'L');
 
 $pdf->SetXY(5,18);
 $pdf->SetTextColor(0);
@@ -66,14 +67,14 @@ $pdf->SetFont('Times');
 $pdf->Cell(15,4,"Course :",$borders,0,'R');
 $pdf->SetTextColor(50);
 $pdf->SetFont('Courier');
-$pdf->Cell(25,4,strtoupper($_POST["course"]),$borders,0,'L');
+$pdf->Cell(25,4,strtoupper($_SESSION["course"]),$borders,0,'L');
 
 $pdf->SetFont('Times');
 $pdf->SetTextColor(0);
 $pdf->Cell(18,4,"DOB :",$borders,0,'R');
 $pdf->SetFont('Courier');
 $pdf->SetTextColor(50);
-$asd = date("d-m-Y",strtotime($_POST["dob"]));
+$asd = date("d-m-Y",strtotime($_SESSION["dob"]));
 $pdf->Cell(22,4,$asd,$borders,1,'L');
 
 $pdf->SetXY(5,22);
@@ -82,14 +83,14 @@ $pdf->SetTextColor(0);
 $pdf->Cell(15,4,"Joined on :",$borders,0,'R');
 $pdf->SetFont('Courier');
 $pdf->SetTextColor(50);
-$pdf->Cell(15,4,$_POST["yoj"],$borders,0,'L');
+$pdf->Cell(15,4,$_SESSION["yoj"],$borders,0,'L');
 
 $pdf->SetFont('Times');
 $pdf->SetTextColor(0);
 $pdf->Cell(28,4,"Blood Grp. :",$borders,0,'R');
 $pdf->SetFont('Courier');
 $pdf->SetTextColor(50);
-$pdf->Cell(22,4,$_POST["bloodgroup"],$borders,1,'L');
+$pdf->Cell(22,4,$_SESSION["bloodgroup"],$borders,1,'L');
 
 $pdf->SetXY(5,26);
 $pdf->SetFont('Times');
@@ -97,7 +98,7 @@ $pdf->SetTextColor(0);
 $pdf->Cell(15,4,"Gender :",$borders,0,'R');
 $pdf->SetFont('Courier');
 $pdf->SetTextColor(50);
-$pdf->Cell(44,4,$_POST["gender"],$borders,1,'L');
+$pdf->Cell(44,4,$_SESSION["gender"],$borders,1,'L');
 
 $pdf->SetXY(5,30);
 $pdf->SetFont('Times');
@@ -105,7 +106,7 @@ $pdf->SetTextColor(0);
 $pdf->Cell(15,4,"Valid Upto :",$borders,0,'R');
 $pdf->SetFont('Courier');
 $pdf->SetTextColor(50);
-$yog = $_POST["yoj"]+CourseTime($_POST["course"]);
+$yog = $_SESSION["yoj"]+CourseTime($_SESSION["course"]);
 $pdf->Cell(44,4,$yog,$borders,1,'L');
 
 $pdf->SetXY(5,34);
@@ -116,14 +117,14 @@ $pdf->SetFont('Courier');
 $pdf->SetTextColor(50);
 $pdf->SetFontSize(7);
 $pdf->SetY(34.5,false);
-$pdf->MultiCell(44,3,$_POST["address"],$borders,'J');
+$pdf->MultiCell(44,3,$_SESSION["address"],$borders,'J');
 $pdf->SetFontSize(9);
 
 
 $pdf->SetLineWidth(1);
 $pdf->Rect(65,30,20,20);
-$split_name=explode(".",$_FILES["profile"]["name"]);
-$pdf->Image($_FILES['profile']['tmp_name'],65,30,20,20,end($split_name));
-$pdf->Output('I','ID - '.$_POST["name"].'.pdf');
+$split_name=explode(".",$_SESSION["profile"]);
+$pdf->Image($_SESSION["profile"],65,30,20,20,end($split_name));
+$pdf->Output('I','ID - '.$_SESSION["name"].'.pdf');
 
 ?>
