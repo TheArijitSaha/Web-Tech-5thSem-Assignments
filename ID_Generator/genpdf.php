@@ -127,4 +127,7 @@ $split_name=explode(".",$_SESSION["profile"]);
 $pdf->Image($_SESSION["profile"],65,30,20,20,end($split_name));
 $pdf->Output('I','ID - '.$_SESSION["name"].'.pdf');
 
+session_unset();
+session_destroy();
+
 ?>

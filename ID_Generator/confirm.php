@@ -1,6 +1,9 @@
 <?php
     session_start();
-    header( 'Location: http://cs.iiests.ac.in/~arijits/ID_Generator/genpdf.php' ) ;
+    if($_POST["type"]=="PDF")
+        header( 'Location: http://cs.iiests.ac.in/~arijits/ID_Generator/genpdf.php' );
+    else if($_POST["type"]=="IMG")
+        header( 'Location: http://cs.iiests.ac.in/~arijits/ID_Generator/genimage.php' );
 
     $con = mysqli_connect("localhost","btech2017","btech2017") or die ("Cannot Connect to mysql because : ".mysql_error());
     //$con = mysqli_connect("localhost","PPLab","PPRox") or die ("Cannot Connect to mysql because : ".mysql_error());

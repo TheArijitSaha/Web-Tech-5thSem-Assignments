@@ -35,7 +35,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="signup.html">Sign Up <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="form.php">Sign Up <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="members.php">Members</a>
@@ -151,7 +151,6 @@
                             <div class="form-group">
                                 <label for="district">District</label>
                                 <select name="district" id="district-list" class="form-control">
-                                    <option value="">---------------</option>
                                 </select>
                             </div>
                         </div>

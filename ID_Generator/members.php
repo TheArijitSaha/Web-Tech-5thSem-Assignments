@@ -35,6 +35,7 @@
                         <th scope="col">Joined</th>
                         <th scope="col">Image</th>
                         <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,15 +49,31 @@
                         $rowno=1;
                         $query = mysqli_query($con, "SELECT * FROM AS_ARG_TABLE");
                         while($row=mysqli_fetch_array($query))
-                        {
-                            echo "<tr>\n";
-                            echo "\t\t\t\t\t\t<th scope=\"row\">".$rowno."</th>\n";
-                            echo "\t\t\t\t\t\t<td>".$row["name"]."</td>\n";
-                            echo "\t\t\t\t\t\t<td>".$row["course"]."</td>\n";
-                            echo "\t\t\t\t\t\t<td>".$row["yoj"]."</td>\n";
-                            echo "\t\t\t\t\t\t<td><img height=\"70\" width=\"70\" src=\"".$row["profile"]."\" alt=\"Unavailable\"></td>\n";
-                            echo "\t\t\t\t\t\t<td><form action=\"confirmpdf.php\" method=\"POST\" enctype=\"multipart/form-data\"><input type=\"text\" name=\"info\" value=\"".$row["profile"]."\" hidden><input type=\"submit\" class=\"btn btn-success\" name=\"generate\" value=\"Generate PDF\"></form></td>\n";
-                            echo "\t\t\t\t\t</tr>\n";
+                        {?>
+                            <tr>
+                                <th scope="row"><?php echo $rowno;?></th>
+                                <td><?php echo $row["name"]; ?></td>
+                                <td><?php echo $row["course"]; ?></td>
+                                <td><?php echo $row["yoj"]; ?></td>
+                                <td>
+                                    <img height="70" width="70" src="<?php echo $row["profile"]; ?>" alt="Unavailable">
+                                </td>
+                                <td>
+                                    <form action="confirm.php" method="POST" enctype="multipart/form-data">
+                                        <input type="text" name="type" value="PDF" hidden>
+                                        <input type="text" name="info" value="<?php echo $row["profile"]; ?>" hidden>
+                                        <input type="submit" class="btn btn-success" name="generatepdf" value="Generate PDF">
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="confirm.php" method="POST" enctype="multipart/form-data">
+                                        <input type="text" name="type" value="IMG" hidden>
+                                        <input type="text" name="info" value="<?php echo $row["profile"]; ?>" hidden>
+                                        <input type="submit" class="btn btn-warning" name="generate" value="Generate PNG">
+                                    </form>
+                                </td>
+                            </tr>
+                            <?php
                             $rowno=$rowno+1;
                         }
                         mysqli_close($con);
