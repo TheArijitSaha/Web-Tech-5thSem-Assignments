@@ -15,6 +15,28 @@ function CourseTime($course){
     return 0;
 }
 
+function imagecreatefromfile($filename)
+{
+    if(!file_exists($filename))
+        throw new InvalidArgumentException('File "'.$filename.'" not found.');
+    switch(strtolower(pathinfo($filename, PATHINFO_EXTENSION )))
+    {
+        case 'jpeg':
+        case 'jpg':
+            return imagecreatefromjpeg($filename);
+        break;
+        case 'png':
+            return imagecreatefrompng($filename);
+        break;
+        case 'gif':
+            return imagecreatefromgif($filename);
+        break;
+        default:
+            throw new InvalidArgumentException('File "'.$filename.'" is not valid jpg, png or gif image.');
+        break;
+    }
+}
+
 $im=imagecreatefrompng("ID_Template.png");
 
 $black = imagecolorallocate($im, 0, 0, 0);
@@ -43,7 +65,7 @@ foreach($divaddress as $lineaddress)
     $ind=$ind+15;
 }
 
-$source = imagecreatefromjpeg($_SESSION["profile"]);
+$source = imagecreatefromfile($_SESSION["profile"]);
 list($width,$height)=getimagesize($_SESSION["profile"]);
 imagecopyresampled($im,$source,246,112,0,0,75,75,$width,$height);
 

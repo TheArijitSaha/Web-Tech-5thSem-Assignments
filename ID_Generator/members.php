@@ -23,7 +23,21 @@
             </div>
         </nav>
 
-
+        <div class="container my-4">
+            <div class="row">
+                <div class="col-lg-6">
+                    <form action="backup.php" method="POST">
+                        <input class="btn btn-primary" type="submit" name="BackupButton" value="Back-Up">
+                    </form>
+                </div>
+                <div class="col-lg-6">
+                    <form class="form-inline" action="restore.php" method="POST" enctype="multipart/form-data">
+                        <input class="form-control" type="file" name="RestoreFile" required>
+                        <input class="btn btn-danger" type="submit" name="RestoreButton" value="Restore">
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <div class="container my-4">
             <table class="table table-striped">
