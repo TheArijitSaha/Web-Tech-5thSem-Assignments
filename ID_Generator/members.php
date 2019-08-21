@@ -5,8 +5,8 @@
         <title>Members</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <body style="padding-top: 50px;">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <a class="navbar-brand" href="#">CoEnSoBEC</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -25,16 +25,19 @@
 
         <div class="container my-4">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-sm-6">
                     <form action="backup.php" method="POST">
                         <input class="btn btn-primary" type="submit" name="BackupButton" value="Back-Up">
                     </form>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-sm-6">
                     <form class="form-inline" action="restore.php" method="POST" enctype="multipart/form-data">
-                        <input class="form-control" type="file" name="RestoreFile" required>
-                        <input class="btn btn-danger" type="submit" name="RestoreButton" value="Restore">
+                        <input class="form-control col-sm-8" type="file" name="RestoreFile" required>
+                        <input class="btn btn-danger col-sm-2 ml-auto" type="submit" name="RestoreButton" value="Restore">
                     </form>
+                    <div class="alert alert-success my-2" id="RestoreAlert" role="alert" hidden>
+                        Restore Successful!
+                    </div>
                 </div>
             </div>
         </div>
