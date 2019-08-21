@@ -49,7 +49,6 @@
                         <th scope="col">Joined</th>
                         <th scope="col">Image</th>
                         <th scope="col"></th>
-                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,14 +75,12 @@
                                     <form action="confirm.php" method="POST" enctype="multipart/form-data">
                                         <input type="text" name="type" value="PDF" hidden>
                                         <input type="text" name="info" value="<?php echo $row["profile"]; ?>" hidden>
-                                        <input type="submit" class="btn btn-success" name="generatepdf" value="Generate PDF">
+                                        <input type="submit" class="btn btn-sm btn-success" name="generatepdf" value="Generate PDF">
                                     </form>
-                                </td>
-                                <td>
                                     <form action="confirm.php" method="POST" enctype="multipart/form-data">
                                         <input type="text" name="type" value="IMG" hidden>
                                         <input type="text" name="info" value="<?php echo $row["profile"]; ?>" hidden>
-                                        <input type="submit" class="btn btn-warning" name="generate" value="Generate PNG">
+                                        <input type="submit" class="btn btn-sm btn-warning my-1" name="generate" value="Generate PNG">
                                     </form>
                                 </td>
                             </tr>
