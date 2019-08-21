@@ -80,7 +80,7 @@
                                     <form action="confirm.php" method="POST" enctype="multipart/form-data">
                                         <input type="text" name="type" value="IMG" hidden>
                                         <input type="text" name="info" value="<?php echo $row["profile"]; ?>" hidden>
-                                        <input type="submit" class="btn btn-sm btn-warning my-1" name="generate" value="Generate PNG">
+                                        <input type="submit" class="btn btn-sm btn-info my-1" name="generate" value="Generate PNG">
                                     </form>
                                 </td>
                             </tr>
