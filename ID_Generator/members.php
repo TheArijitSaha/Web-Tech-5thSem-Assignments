@@ -4,6 +4,20 @@
         <meta charset="utf-8">
         <title>Members</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script type="text/javascript">
+            // function performBackup(){
+            //     let xhttp=new XMLHttpRequest();
+            //     xhttp.onreadystatechange=function(){
+            //         if (this.readyState == 4 && this.status == 200)
+            //         {
+            //             document.getElementById("BackupAlert").removeAttribute("hidden");
+            //         }
+            //     };
+            //     xhttp.open("POST","backup.php",true);
+            //     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            //     xhttp.send();
+            // }
+        </script>
     </head>
     <body style="padding-top: 50px;">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -29,6 +43,10 @@
                     <form action="backup.php" method="POST">
                         <input class="btn btn-primary" type="submit" name="BackupButton" value="Back-Up">
                     </form>
+                    <!-- <button type="button" class="btn btn-success" onclick="performBackup()" name="BackupButton">Back-Up</button> -->
+                    <div class="alert alert-success my-2" id="BackupAlert" role="alert" hidden>
+                        Backup Successful!
+                    </div>
                 </div>
                 <div class="col-sm-6">
                     <form class="form-inline" action="restore.php" method="POST" enctype="multipart/form-data">
