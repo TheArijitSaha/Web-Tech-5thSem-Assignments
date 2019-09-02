@@ -29,7 +29,7 @@ if (isLoggedIn())
 else
 {
         echo 'Not logged in. Redirecting to login page!';
-        header("Location: login.php");
+        header("Location: create_acct.php");
         exit;
 }
 ?>
