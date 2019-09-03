@@ -35,15 +35,17 @@ if (isset($_POST['createaccount'])) {
        }
        else
        {
-         echo "Email already registered\n";
-         header("Location: login.php");
+         header("refresh:5;url=login.php");
+         echo "Email already registered\nRedirecting to login page";
+
+         exit;
        }
 }
 ?>
 
 <h1>SIGN UP!!</h1>
 <form action="login.php" method="get">
-    <input type="submit" name="signedup" value="Log In?">
+  <input type="submit" name="signedup" value="Log in?">
 </form>
 <form action="create_acct.php" method="post">
 <input type="text" name="name" value="" placeholder="First Middle Last"><p />
