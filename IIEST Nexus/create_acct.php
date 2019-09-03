@@ -35,7 +35,10 @@ if (isset($_POST['createaccount'])) {
        }
        else
        {
-         echo "Email already registered\n";
+         header("refresh:5;url=login.php");
+         echo "Email already registered\nRedirecting to login page";
+
+         exit;
        }
 }
 ?>

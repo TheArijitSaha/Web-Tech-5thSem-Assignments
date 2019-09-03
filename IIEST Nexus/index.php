@@ -28,8 +28,9 @@ if (isLoggedIn())
 }
 else
 {
+        header("refresh:5;url=create_acct.php");
         echo 'Not logged in. Redirecting to login page!';
-        header("Location: create_acct.php");
+
         exit;
 }
 ?>

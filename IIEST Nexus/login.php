@@ -12,6 +12,7 @@ if (isset($_POST['login'])) {
                         $user_id = DB::query('SELECT id FROM ASARGUsers WHERE email=:email', array(':email'=>$email))[0]['id'];
                         DB::query('INSERT INTO asargtokens VALUES (DEFAULT, :token, :userid)', array(':token'=>sha1($token), ':userid'=>$user_id));
                         setcookie("SNID", $token, time() + 60 * 60 * 24 * 7, '/', NULL, NULL, TRUE);
+                        header("url=temp.php");
 
                 }
                 else
