@@ -1,16 +1,16 @@
 <?php
-include('classes/DB.php');
+include('classes/DataBase.php');
 if (isset($_POST['login'])) {
         $email = $_POST['email'];
         $password = $_POST['password'];
-        if (DB::query('SELECT email FROM ASARGUsers WHERE email=:email', array(':email'=>$email))) {
-                if (password_verify($password, DB::query('SELECT password FROM ASARGUsers WHERE email=:email', array(':email'=>$email))[0]['password']))
+        if (DataBase::query('SELECT email FROM ASARGUsers WHERE email=:email', array(':email'=>$email))) {
+                if (password_verify($password, DataBase::query('SELECT password FROM ASARGUsers WHERE email=:email', array(':email'=>$email))[0]['password']))
                 {
                         echo 'Logged in!';
                         $cstrong = True;
                         $token = bin2hex(openssl_random_pseudo_bytes(64, $cstrong));
-                        $user_id = DB::query('SELECT id FROM ASARGUsers WHERE email=:email', array(':email'=>$email))[0]['id'];
-                        DB::query('INSERT INTO asargtokens VALUES (DEFAULT, :token, :userid)', array(':token'=>sha1($token), ':userid'=>$user_id));
+                        $user_id = DataBase::query('SELECT id FROM ASARGUsers WHERE email=:email', array(':email'=>$email))[0]['id'];
+                        DataBase::query('INSERT INTO asargtokens VALUES (DEFAULT, :token, :userid)', array(':token'=>sha1($token), ':userid'=>$user_id));
                         setcookie("SNID", $token, time() + 60 * 60 * 24 * 7, '/', NULL, NULL, TRUE);
 
                 }

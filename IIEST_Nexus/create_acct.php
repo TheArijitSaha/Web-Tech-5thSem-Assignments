@@ -1,5 +1,5 @@
 <?php
-include('classes/DB.php');
+include('classes/DataBase.php');
 if (isset($_POST['createaccount'])) {
         $name = $_POST['name'];
         $password = $_POST['password'];
@@ -8,7 +8,7 @@ if (isset($_POST['createaccount'])) {
         $dob= date_format($dob,"Y/m/d");
         $id='0';
 
-        if (!DB::query('SELECT email FROM ASARGUsers WHERE email=:email', array(':email'=>$email)))
+        if (!DataBase::query('SELECT email FROM ASARGUsers WHERE email=:email', array(':email'=>$email)))
         {
           if (preg_match("/^[a-zA-Z'. -]+$/", $name))
           {
@@ -16,7 +16,7 @@ if (isset($_POST['createaccount'])) {
             {
               if (filter_var($email, FILTER_VALIDATE_EMAIL))
               {
-                DB::query('INSERT INTO ASARGUsers VALUES (:name,:email,:dob,DEFAULT,:password)', array(':name'=>$name,':email'=>$email,':dob'=>$dob,':password'=>password_hash($password, PASSWORD_BCRYPT)));
+                DataBase::query('INSERT INTO ASARGUsers VALUES (:name,:email,:dob,DEFAULT,:password)', array(':name'=>$name,':email'=>$email,':dob'=>$dob,':password'=>password_hash($password, PASSWORD_BCRYPT)));
                   echo "Success!";
               }
               else
