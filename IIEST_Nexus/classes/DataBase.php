@@ -2,10 +2,24 @@
 
 class DataBase
 {
+
+    ////////////////////////////////IIESTS DB///////////////////////////////////
+    // private static $host_name='localhost';
+    // private static $database_name='btech2017';
+    // private static $database_username='btech2017';
+    // private static $database_password='btech2017';
+    ////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////Arijit's Home DB/////////////////////////////////
     private static $host_name='localhost';
-    private static $database_name='btech2017';
-    private static $database_username='btech2017';
-    private static $database_password='btech2017';
+    private static $database_name='IIESTNexus';
+    private static $database_username='PPLab';
+    private static $database_password='PPRox';
+    ////////////////////////////////////////////////////////////////////////////
+
+    // Table Names:
+    public static $user_table_name    = "ASARGUsers";
+    public static $token_table_name   = "asargtokens";
 
     private static function connect()
     {
@@ -13,6 +27,8 @@ class DataBase
         // $link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $link;
     }
+
+
 
     public static function query($query, $params = array())
     {
@@ -25,5 +41,8 @@ class DataBase
             return $data;
         }
     }
+
+
+
 }
 ?>

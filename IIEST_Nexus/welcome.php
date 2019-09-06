@@ -57,7 +57,7 @@
                 </div>
                 <div class="col-sm-8">
                     <div class="container">
-                        <form id="SignInForm" method="POST">
+                        <form id="SignInForm" method="POST" action="login.php">
                             <div class="row">
                                 <div class="col-sm-4">
                                     <input class="form-control" id="LoginUsername" type="text" name="loginuser" placeholder="Enter Email ID" required>
@@ -74,7 +74,7 @@
                     <hr>
                     <div class="container">
                         <h3>Else Sign Up</h3>
-                        <form method="POST">
+                        <form id="SignUpForm" method="POST" action="signup.php">
                             <div class="form-group row">
                                 <label class='col-form-label col-sm-3' for="name"><strong>Name</strong></label>
                                 <div class="col">
@@ -94,13 +94,13 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class='col-form-label col-sm-3' for="password"><strong>Date of Birth</strong></label>
+                                <label class='col-form-label col-sm-3' for="dob"><strong>Date of Birth</strong></label>
                                 <div class="col">
                                     <input class='form-control' type="date" name="dob">
                                 </div>
                             </div>
                             <div class="form-group text-center">
-                                <input class='btn btn-success' type="submit" name="signup" formaction="signup.php" value="Sign-Up">
+                                <input class='btn btn-success' type="submit" name="signup" value="Sign-Up">
                                 <input class='btn btn-danger' type="reset" name="reset" value="Reset">
                             </div>
                         </form>
