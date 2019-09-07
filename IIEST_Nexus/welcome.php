@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+
+<?php
+require_once('./classes/LoginClass.php');
+
+if (LoginClass::isLoggedIn())
+{
+    header("Location: feed.php");
+    exit();
+}
+
+?>
+
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
@@ -9,40 +21,6 @@
     <body>
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
             <a class="navbar-brand" href="#">IIEST Nexus</a>
-            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% block scheme_active %}{% endblock %}" href="#" id="schemeDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Schemes
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="schemeDropdown">
-                            <a class="dropdown-item" href="{% url 'scheme_app:create' %}">Create</a>
-                            <a class="dropdown-item" href="{% url 'scheme_app:list' %}">List</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% block customer_active %}{% endblock %}" href="#" id="customerDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Customer
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="customerDropdown">
-                            <a class="dropdown-item" href="{% url 'customer_app:create' %}">Create</a>
-                            <a class="dropdown-item" href="{% url 'customer_app:list' %}">List</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% block transaction_active %}{% endblock %}" href="#" id="transactionDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Transaction
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="transactionDropdown">
-                            <a class="dropdown-item" href="{% url 'transaction_app:create' %}">Create</a>
-                            <a class="dropdown-item" href="{% url 'transaction_app:list' %}">List</a>
-                        </div>
-                    </li>
-                </ul>
-            </div> -->
         </nav>
 
 
@@ -57,7 +35,8 @@
                 </div>
                 <div class="col-sm-8">
                     <div class="container">
-                        <form id="SignInForm" method="POST" action="login.php">
+                        <h3>Log In</h3>
+                        <form id="LogInForm" method="POST">
                             <div class="row">
                                 <div class="col-sm-4">
                                     <input class="form-control" id="LoginUsername" type="text" name="loginuser" placeholder="Enter Email ID" required>
@@ -73,7 +52,7 @@
                     </div>
                     <hr>
                     <div class="container">
-                        <h3>Else Sign Up</h3>
+                        <h3>Sign Up</h3>
                         <form id="SignUpForm" method="POST" action="signup.php">
                             <div class="form-group row">
                                 <label class='col-form-label col-sm-3' for="name"><strong>Name</strong></label>

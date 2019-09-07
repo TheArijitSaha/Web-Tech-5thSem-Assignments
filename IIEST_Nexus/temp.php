@@ -1,3 +1,6 @@
 <?php
-  echo "You are logged in now\n";
+require_once('./classes/LoginClass.php');
+
+echo (LoginClass::isLoggedIn()?"Logged In":"Logged Out");
+echo "<p></p>";
 ?>

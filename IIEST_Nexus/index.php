@@ -3,7 +3,7 @@ require_once('./classes/LoginClass.php');
 
 if (LoginClass::isLoggedIn())
 {
-    header("Location: temp.php");
+    header("Location: feed.php");
     exit();
 }
 else
@@ -11,4 +11,5 @@ else
     header("Location: welcome.php");
     exit();
 }
+
 ?>

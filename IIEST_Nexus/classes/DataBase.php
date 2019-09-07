@@ -33,16 +33,18 @@ class DataBase
     public static function query($query, $params = array())
     {
         $statement=self::connect()->prepare($query);
-        $statement->execute($params);
-        // print_r($statement->errorInfo());
+        if(!($statement->execute($params)))
+        {
+            // print_r($statement->errorInfo());
+            return False;
+        }
         if(explode(' ', $query)[0]=='SELECT') //checks if the first word of the query is select
         {
             $data=$statement->fetchAll();
             return $data;
         }
+        return True;
     }
-
-
 
 }
 ?>

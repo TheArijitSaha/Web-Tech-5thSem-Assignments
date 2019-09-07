@@ -8,7 +8,6 @@ if (isset($_POST['signup']))
     $email      = $_POST['email'];
     $dob        = date_create($_POST['dob']);
     $dob        = date_format($dob,"Y/m/d");
-    $id         = '0';
 
     if (!DataBase::query('SELECT email FROM '.DataBase::$user_table_name.' WHERE email=:email', array(':email'=>$email)))
     {
