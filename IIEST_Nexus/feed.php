@@ -19,13 +19,13 @@ $current_user = new User($logged_in_id);
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Feed | <?php echo $current_user->getName(); ?></title>
+        <title><?php echo $current_user->getName(); ?> | Feed</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="static/css/master.css">
     </head>
     <body>
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="#">IIEST Nexus</a>
+            <a class="navbar-brand" href="/IIEST_Nexus/">IIEST Nexus</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -43,7 +43,7 @@ $current_user = new User($logged_in_id);
                     </li> -->
                 </ul>
                 <form class="form-inline my-0" method="POST">
-                    <input class="btn btn-sm btn-outline-danger" type="submit" name="logout" value="Logout">
+                    <input class="btn btn-sm btn-outline-danger" type="submit" name="logout" value="Logout" formaction="logout.php">
                 </form>
             </div>
         </nav>
