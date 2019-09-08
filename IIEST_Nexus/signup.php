@@ -1,5 +1,6 @@
 <?php
-require_once('classes/DataBase.php');
+require_once('./classes/DataBase.php');
+require_once('./classes/variables.php');
 
 if (isset($_POST['signup']))
 {
@@ -17,8 +18,19 @@ if (isset($_POST['signup']))
             {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL))
                 {
+                    // Insert New Records into DataBase
                     DataBase::query('INSERT INTO '.DataBase::$user_table_name.' VALUES (:name,:email,:dob,DEFAULT,:password)', array(':name'=>$name,':email'=>$email,':dob'=>$dob,':password'=>password_hash($password, PASSWORD_BCRYPT)));
-                    echo "Success!";
+
+                    // Log the new user in and direct to feed
+                    $crypto_strong = True;
+                    $token = bin2hex(openssl_random_pseudo_bytes(64, $crypto_strong));
+                    $user_id = DataBase::query('SELECT id FROM '.DataBase::$user_table_name.' WHERE email=:email', array(':email'=>$email))[0]['id'];
+                    DataBase::query('INSERT INTO '.DataBase::$token_table_name.' VALUES (DEFAULT, :token, :userid)',
+                                    array(':token'=>sha1($token), ':userid'=>$user_id));
+                    setcookie("SNID", $token, time() + 60*60*24*7, NetworkVariables::$cookie_path, NULL, NULL, TRUE);
+                    setcookie("SNID_", $token, time() + 60*60*24*3, NetworkVariables::$cookie_path, NULL, NULL, TRUE);
+                    header('Location: feed.php');
+                    
                 }
                 else
                 {
