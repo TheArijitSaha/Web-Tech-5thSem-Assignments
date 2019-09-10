@@ -20,7 +20,7 @@ if (LoginClass::isLoggedIn())
     </head>
     <body>
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="/IIEST_Nexus/">IIEST Nexus</a>
+            <a class="navbar-brand" href="<?php echo NetworkVariables::$home_path;?>">IIEST Nexus</a>
         </nav>
 
 

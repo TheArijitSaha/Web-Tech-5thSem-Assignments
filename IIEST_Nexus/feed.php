@@ -3,6 +3,7 @@
 <?php
 require_once('./classes/LoginClass.php');
 require_once('./classes/User.php');
+require_once('./classes/variables.php');
 
 $logged_in_id = LoginClass::isLoggedIn();
 
@@ -25,7 +26,7 @@ $current_user = new User($logged_in_id);
     </head>
     <body>
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="/IIEST_Nexus/">IIEST Nexus</a>
+            <a class="navbar-brand" href="<?php echo NetworkVariables::$home_path;?>">IIEST Nexus</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

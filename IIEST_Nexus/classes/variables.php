@@ -4,11 +4,13 @@ class NetworkVariables
 {
 
     ////////////////////////////////IIESTS//////////////////////////////////////
-    // public static $cookie_path           = "/~arijits/IIEST_Nexus/";
+    public static $home_path                = "/~arijits/IIEST_Nexus/";
+    public static $cookie_path              = "/~arijits/IIEST_Nexus/";
     ////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////Arijit's Home////////////////////////////////////
-    public static $cookie_path              = "/IIEST_Nexus/";
+    // public static $home_path             = "/IIEST_Nexus/";
+    // public static $cookie_path           = "/IIEST_Nexus/";
     ////////////////////////////////////////////////////////////////////////////
 }
 
