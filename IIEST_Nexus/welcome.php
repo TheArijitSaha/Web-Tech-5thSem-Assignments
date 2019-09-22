@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 
 <?php
-require_once('./classes/LoginClass.php');
+
+require_once('classes/LoginClass.php');
+require_once('classes/variables.php');
+require_once('classes/NexusNav.php');
 
 if (LoginClass::isLoggedIn())
 {
@@ -19,10 +22,7 @@ if (LoginClass::isLoggedIn())
         <link rel="stylesheet" href="static/css/master.css">
     </head>
     <body>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="<?php echo NetworkVariables::$home_path;?>">IIEST Nexus</a>
-        </nav>
-
+        <?php echo NexusNav::insertNavbar(); ?>
 
         <div class="container">
             <div class="row">

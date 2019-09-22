@@ -32,18 +32,18 @@ $current_user = new User($logged_in_id);
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto mt-0">
-                    <!-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% block transaction_active %}{% endblock %}" href="#" id="transactionDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Transaction
+                <ul class="navbar-nav ml-auto mt-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="meDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Me
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="transactionDropdown">
-                            <a class="dropdown-item" href="{% url 'transaction_app:create' %}">Create</a>
-                            <a class="dropdown-item" href="{% url 'transaction_app:list' %}">List</a>
+                        <div class="dropdown-menu" aria-labelledby="meDropdown">
+                            <a class="dropdown-item" href="#">Profile</a>
+                            <!-- <a class="dropdown-item" href="#"></a> -->
                         </div>
-                    </li> -->
+                    </li>
                 </ul>
-                <form class="form-inline my-0" method="POST">
+                <form class="form-inline my-0 mx-3" method="POST">
                     <input class="btn btn-sm btn-outline-danger" type="submit" name="logout" value="Logout" formaction="logout.php">
                 </form>
             </div>

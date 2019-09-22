@@ -4,17 +4,17 @@ class DataBase
 {
 
     ////////////////////////////////IIESTS DB///////////////////////////////////
-    private static $host_name='localhost';
-    private static $database_name='btech2017';
-    private static $database_username='btech2017';
-    private static $database_password='btech2017';
+    // private static $host_name='localhost';
+    // private static $database_name='btech2017';
+    // private static $database_username='btech2017';
+    // private static $database_password='btech2017';
     ////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////Arijit's Home DB/////////////////////////////////
-    // private static $host_name='localhost';
-    // private static $database_name='IIESTNexus';
-    // private static $database_username='PPLab';
-    // private static $database_password='PPRox';
+    private static $host_name='localhost';
+    private static $database_name='IIESTNexus';
+    private static $database_username='PPLab';
+    private static $database_password='PPRox';
     ////////////////////////////////////////////////////////////////////////////
 
     // Table Names:

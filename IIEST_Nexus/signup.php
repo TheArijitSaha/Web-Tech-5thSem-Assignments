@@ -30,7 +30,6 @@ if (isset($_POST['signup']))
                     setcookie("SNID", $token, time() + 60*60*24*7, NetworkVariables::$cookie_path, NULL, NULL, TRUE);
                     setcookie("SNID_", $token, time() + 60*60*24*3, NetworkVariables::$cookie_path, NULL, NULL, TRUE);
                     header('Location: feed.php');
-                    
                 }
                 else
                 {
@@ -51,7 +50,7 @@ if (isset($_POST['signup']))
     {
         header("refresh:5;url=login.php");
         echo "Email already registered\nRedirecting to login page";
-        exit;
+        exit();
     }
 }
 else

@@ -1,6 +1,7 @@
 <?php
-require_once("classes/DataBase.php");
-require_once("classes/variables.php");
+
+require_once("DataBase.php");
+require_once("variables.php");
 
 class LoginClass
 {
@@ -23,7 +24,7 @@ class LoginClass
                                     array(':token'=>sha1($token), ':userid'=>$userid));
                     DataBase::query('DELETE FROM '.DataBase::$token_table_name.' WHERE token=:token',
                                     array(':token'=>sha1($_COOKIE['SNID'])));
-                    // Check to change if we have to change the path of the cookie
+                    // Check if we have to change the path of the cookie
                     setcookie("SNID", $token, time() + 60*60*24*7, NetworkVariables::$cookie_path, NULL, NULL, TRUE);
                     setcookie("SNID_", '1', time() + 60*60*24*3, NetworkVariables::$cookie_path, NULL, NULL, TRUE);
                     return $userid;
