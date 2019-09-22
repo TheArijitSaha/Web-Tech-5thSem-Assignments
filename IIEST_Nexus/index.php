@@ -1,15 +1,16 @@
 <?php
-include('./classes/DataBase.php');
-include('./classes/LoginClass.php');
 
+require_once("classes/LoginClass.php");
+echo "hua";
 if (LoginClass::isLoggedIn())
 {
-    header("Location: temp.php");
-    exit;
+    header("Location: feed.php");
+    exit();
 }
 else
 {
-    header("Location: create_acct.php");
-    exit;
+    header("Location: welcome.php");
+    exit();
 }
+
 ?>
