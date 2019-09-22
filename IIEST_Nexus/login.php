@@ -1,6 +1,6 @@
 <?php
-require_once('./classes/DataBase.php');
-require_once('./classes/variables.php');
+require_once('classes/DataBase.php');
+require_once('classes/variables.php');
 
 if(isset($_POST['login']))
 {

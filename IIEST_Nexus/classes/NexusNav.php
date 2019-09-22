@@ -17,7 +17,7 @@ class NexusNav
                             Me
                         </a>
                         <div class="dropdown-menu" aria-labelledby="meDropdown">
-                            <a class="dropdown-item" href="#">Profile</a>
+                            <a class="dropdown-item" href="profile.php">Profile</a>
                             <!-- <a class="dropdown-item" href="#"></a> -->
                         </div>
                     </li>
@@ -35,7 +35,7 @@ class NexusNav
                         <a class="navbar-brand" href="'.NetworkVariables::$home_path.'">IIEST Nexus</a>';
         if(LoginClass::isLoggedIn())
         {
-            $retString=$retString.$logged_in_part;
+            $retString=$retString.self::$logged_in_part;
         }
         $retString=$retString.'</nav>';
         return $retString;
