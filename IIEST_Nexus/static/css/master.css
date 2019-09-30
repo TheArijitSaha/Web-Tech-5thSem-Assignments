@@ -1,4 +1,9 @@
 body {
-  min-height: 75rem;
+  min-height: 50rem;
   padding-top: 4.5rem;
 }
+
+/* .Back1{
+    background-image: url(../../media/background1.jpg);
+    min-height: 100%;
+} */

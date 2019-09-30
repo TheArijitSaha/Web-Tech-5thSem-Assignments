@@ -14,11 +14,11 @@ class NexusNav
                 <ul class="navbar-nav ml-auto mt-0">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="meDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Me
+                            <img src="media/profile-placeholder.jpg" width="30px" height="30px" style="border-radius:50%;" alt="Me">
                         </a>
                         <div class="dropdown-menu" aria-labelledby="meDropdown">
                             <a class="dropdown-item" href="profile.php">Profile</a>
-                            <!-- <a class="dropdown-item" href="#"></a> -->
+                            <a class="dropdown-item" href="skills.php">Skills</a>
                         </div>
                     </li>
                 </ul>
