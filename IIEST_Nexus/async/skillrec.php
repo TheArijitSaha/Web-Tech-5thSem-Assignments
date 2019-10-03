@@ -12,17 +12,8 @@
         }
         else
         {
-            if(count($result))
-            {
-                foreach ($result as $key => $value)
-                {
-                    echo "<p>" . $value["skill"] . "</p>";
-                }
-            }
-            else
-            {
-                echo "<p>No Skills starting like ".$_GET["skillSearch"]." in Database</p>";
-            }
+            $result_json=json_encode($result);
+            echo $result_json;
         }
     }
 ?>

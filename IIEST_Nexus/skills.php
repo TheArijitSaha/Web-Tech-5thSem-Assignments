@@ -24,6 +24,7 @@ $current_user = new User($logged_in_id);
         <title><?php echo $current_user->getName(); ?> | Skills</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="static/css/master.css">
+        <link rel="stylesheet" href="static/css/skills_master.css">
     </head>
     <body>
         <?php echo NexusNav::insertNavbar(); ?>
@@ -44,24 +45,36 @@ $current_user = new User($logged_in_id);
         <script type="text/javascript">
             $(document).ready(function()
             {
-                $('.search-box input[type="text"]').on("keyup input", function()
+                $('.search-box input[type="text"]').on("input", function()
                 {
                     var inputVal = $(this).val();
                     var resultDropdown = $(this).siblings(".result");
+                    resultDropdown.empty();
+                    console.log("ghus");
                     if(inputVal.length)
                     {
-                        $.get("async/skillrec.php", {skillSearch: inputVal}).done(function(data)
+                        $.get("async/skillrec.php", {skillSearch: inputVal}).done(function(skill_suggest_json)
                         {
-                            resultDropdown.html(data);
+                            skill_suggest_array=JSON.parse(skill_suggest_json);
+                            if(skill_suggest_array.length===0)
+                            {
+                                resultDropdown.html('<p>There are no skills like \"<em>'+inputVal+'</em>\"</p>')
+                            }
+                            else
+                            {
+                                for(x in skill_suggest_array)
+                                {
+                                    if(resultDropdown.html())
+                                        resultDropdown.html(resultDropdown.html()+'<p id=\"skilloption\"><strong>'+skill_suggest_array[x].skill.substr(0,inputVal.length)+'</strong>'+skill_suggest_array[x].skill.substr(inputVal.length)+'</p>');
+                                    else
+                                        resultDropdown.html('<p id=\"skilloption\"><strong>'+skill_suggest_array[x].skill.substr(0,inputVal.length)+'</strong>'+skill_suggest_array[x].skill.substr(inputVal.length)+'</p>');
+                                }
+                            }
                         });
-                    }
-                    else
-                    {
-                        resultDropdown.empty();
                     }
                 });
 
-                $(document).on("click",".result p", function(){
+                $(document).on("click",".result p#skilloption", function(){
                     $(this).parents(".search-box").find('input[type="text"]').val($(this).text());
                     $(this).parent(".result").empty();
                 });
