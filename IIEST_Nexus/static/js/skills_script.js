@@ -39,7 +39,7 @@ function construct_child_string(skill_obj, id){
 
 $(document).ready(function()
 {
-    //For listing all skills
+    //For listing User's skills
     $.get("async/skill_user_list.php").done(function(skill_list_json)
     {
         skill_list_array=JSON.parse(skill_list_json);

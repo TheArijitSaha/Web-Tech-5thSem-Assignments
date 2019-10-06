@@ -33,18 +33,15 @@ $current_user = new User($logged_in_id);
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
-                    <div class="container">
-                        <div class="skill-show">
+                    <h3>My Skills</h3>
+                    <div class="skill-show">
 
-                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <div class="container">
-                        <div class="search-box">
-                            <input class="form-control" type="text" size="30" autocomplete="off" name="skillSearch" placeholder="Search for a skill">
-                            <div class="result" id="skillLiveSearch"></div>
-                        </div>
+                    <div class="search-box">
+                        <input class="form-control" type="text" size="30" autocomplete="off" name="skillSearch" placeholder="Search for a skill">
+                        <div class="result" id="skillLiveSearch"></div>
                     </div>
                 </div>
             </div>
