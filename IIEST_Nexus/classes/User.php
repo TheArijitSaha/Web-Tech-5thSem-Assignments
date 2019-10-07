@@ -14,7 +14,7 @@ class User
                                     .' FROM '.DataBase::$user_table_name.','.DataBase::$token_table_name
                                     .' WHERE '.DataBase::$user_table_name.'.id='.DataBase::$token_table_name.'.userid'
                                     .' AND '.DataBase::$user_table_name.'.id=:id',
-                                    array(':id'=>$id))[0];
+                                    array(':id'=>$id))['data'][0];
         $this->id=$result['id'];
         $this->name=$result['name'];
         $this->email=$result['email'];

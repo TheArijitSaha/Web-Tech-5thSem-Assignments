@@ -37,15 +37,14 @@ class DataBase
         $statement=self::connect()->prepare($query);
         if(!($statement->execute($params)))
         {
-            // print_r($statement->errorInfo());
-            return False;
+            return array("executed"=>False,"errorInfo"=>$statement->errorInfo(),"data"=>NULL);
         }
         if(explode(' ', $query)[0]=='SELECT') //checks if the first word of the query is select
         {
             $data=$statement->fetchAll();
-            return $data;
+            return array("executed"=>True,"errorInfo"=>$statement->errorInfo(),"data"=>$data);
         }
-        return True;
+        return array("executed"=>True,"errorInfo"=>NULL,"data"=>NULL);
     }
 
 }
