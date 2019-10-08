@@ -3,6 +3,10 @@ body {
   padding-top: 4.5rem;
 }
 
+.result{
+    overflow: auto;
+}
+
 /* .Back1{
     background-image: url(../../media/background1.jpg);
     min-height: 100%;

@@ -9,9 +9,10 @@ class LoginClass
     {
         if (isset($_COOKIE['SNID']))
         {
-            if (DataBase::query('SELECT userid FROM '.DataBase::$token_table_name.' WHERE token=:token', array(':token'=>sha1($_COOKIE['SNID']))))
+            $res = DataBase::query('SELECT userid FROM '.DataBase::$token_table_name.' WHERE token=:token', array(':token'=>sha1($_COOKIE['SNID'])));
+            if ($res['executed'])
             {
-                $userid = DataBase::query('SELECT userid FROM '.DataBase::$token_table_name.' WHERE token=:token', array(':token'=>sha1($_COOKIE['SNID'])))[0]['userid'];
+                $userid = $res['data'][0]['userid'];
                 if(isset($_COOKIE['SNID_']))
                 {
                     return $userid;
