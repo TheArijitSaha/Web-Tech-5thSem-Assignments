@@ -26,15 +26,22 @@ function construct_skill_object(skill_arr){
 function construct_child_string(skill_obj, id){
     if(!skill_obj.hasOwnProperty(id))
         return '';
-    let f='<ul>';
+    let f='<ul class="skillList">';
     for(x in skill_obj[id]){
-        f+='<li>'+skill_obj[id][x].skill+'</li>';
+        f+='<li>'
+                +'<div class="skillItem">'
+                    +'<span id="skillName">'
+                        +skill_obj[id][x].skill
+                    +'</span>'
+                +'</div>'
+            +'</li>';
         f+=construct_child_string(skill_obj,skill_obj[id][x].skillid);
     }
     f+='</ul>';
     return f;
 }
 
+// To create an alert div with message provided
 function create_alert_string(message, alertClass, id){
     f='<div class="alert alert-'+ alertClass + ' alert-dismissible fade show" role="alert" id="' + id + '">' +
         message +
@@ -52,9 +59,15 @@ $(document).ready(function()
     function showMySkills(skill_list_json){
         skill_list_array=JSON.parse(skill_list_json);
         skill_object=construct_skill_object(skill_list_array);
-        let f='<ul>';
+        let f='<ul class="skillList">';
         for(x in skill_object[-1]){
-            f+='<li>'+skill_object[-1][x].skill+'</li>';
+            f+='<li>'
+                    +'<div class="skillItem">'
+                        +'<span id="skillName">'
+                            +skill_object[-1][x].skill
+                        +'</span>'
+                    +'</div>'
+                +'</li>';
             f+=construct_child_string(skill_object,skill_object[-1][x].skillid);
         }
         f+='</ul>';
@@ -150,4 +163,55 @@ $(document).ready(function()
 
         });
     });
+
+    // For bringing delete icon after a skill:
+    $(document).on("mouseenter",".skillItem", function(){
+        $(this).addClass("delete");
+        $(this).append('<button type="button" id="deleteSkillItem" class="close" aria-label="Close">'
+                            +'<span aria-hidden="true">'
+                                +'&times;'
+                            +'</span>'
+                        +'</button>'
+                        );
+    });
+    $(document).on("mouseleave",".skillItem", function(){
+        $(this).removeClass("delete");
+        $(this).children("#deleteSkillItem").remove();
+    });
+
+
+    //for deleting a skill:
+    $(document).on("click","#deleteSkillItem",function(){
+        var skillName = $(this).parent().children("#skillName").html();
+        console.log(skillName);
+        $.get("async/skills_async.php",{deleteSkill:skillName}).done(function(result_json){
+            let result=JSON.parse(result_json);
+            console.log(result);
+            if(result.executed===false)
+            {
+                // SQL Error
+                $('.search-box').parent().parent().parent().append(
+                    create_alert_string('SQL ERROR! Contact Developers.','primary','search-alert')
+                );
+                $("#search-alert").css("margin","10px 0px");
+            }
+            else if(result.validSkill===false){
+                // Not a valid Skill
+                $('.search-box').parent().parent().parent().append(
+                    create_alert_string(skillName + ' is not a valid Skill!','danger','search-alert')
+                );
+                $("#search-alert").css("margin","10px 0px");
+            }
+            else if(result.deleted===true){
+                $('.search-box').parent().parent().parent().append(
+                    create_alert_string('Skill \"'+skillName+'\" and all its Children Skills Deleted Successfully','primary','search-alert')
+                );
+                $("#search-alert").css("margin","10px 0px");
+            }
+            $.get("async/skills_async.php",{showMy:true}).done(showMySkills);
+        });
+    });
+
+
+
 });

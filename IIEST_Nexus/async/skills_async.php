@@ -18,18 +18,16 @@
 
     $current_user = new User($logged_in_id);
 
-
-
     // Function to get parent of skill
     function parent($skillid){
         $result = DataBase::query('SELECT * FROM '.DataBase::$skill_table_name.' '.
-                                  'WHERE skillid=:skillid',
-                            array(':skillid'=>$skillid));
+                                    'WHERE skillid=:skillid',
+                                  array(':skillid'=>$skillid));
 
         if ($result['executed']===false)
         {
-            echo "ERROR: Could not able to execute SQL<br>";
-            print_r($result['errorInfo']);
+            echo "ERROR: Not able to execute SQL<br>";
+            // print_r($result['errorInfo']);
             exit();
         }
         else if(count($result['data'])===0){
@@ -40,6 +38,29 @@
         }
     }
 
+    //Delete all children of skill:
+    function deleteSkillForUser($skillid,$userid){
+        $result = DataBase::query('SELECT skillid FROM '.DataBase::$skill_table_name.' '.
+                                  'WHERE parent=:parentid',
+                            array(':parentid'=>$skillid));
+
+        if ($result['executed']===false)
+        {
+            echo "ERROR: Not able to execute SQL<br>";
+            print_r($result['errorInfo']);
+            exit();
+        }
+        foreach($result['data'] as $child)
+        {
+            deleteSkillForUser($child['skillid'],$userid);
+        }
+        DataBase::query('DELETE FROM '.DataBase::$skill_reg_table_name.' '.
+                        'WHERE skillid=:skillid '.
+                        'AND UserID=:userid',
+                        array(':skillid'=>$skillid,
+                                ':userid'=>$userid)
+                        );
+    }
 
 
     // To get JSON of My Skills:
@@ -131,7 +152,7 @@
 
         $skillid = $skill_recognise['data'][0]['skillid'];
 
-        // Add All Ancestor Skills:
+        // Add all Ancestor Skills:
         $currid=parent($skillid);
         while( ($currid!==false) && ($currid!==NULL) ){
             DataBase::query('INSERT INTO '.DataBase::$skill_reg_table_name.
@@ -141,7 +162,6 @@
             $currid = parent($currid);
         }
 
-        // Finally add the skill:
         $result = DataBase::query('INSERT INTO '.DataBase::$skill_reg_table_name.
                                   '(skillid,UserID) VALUES(:skillid,:UserID)',
                             array(':skillid'=>$skillid,':UserID'=>$current_user->getId())
@@ -151,4 +171,39 @@
         $result_json=json_encode($result);
         echo $result_json;
     }
+
+
+    // To Delete a skill:
+    if( isset($_GET['deleteSkill']))
+    {
+        $skill_recognise = DataBase::query('SELECT skillid FROM '.DataBase::$skill_table_name.' '.
+                                           'WHERE skill=:skill',
+                                        array(':skill'=>$_GET['deleteSkill'])
+                                    );
+
+        if($skill_recognise['executed']===false){
+            $skill_recognise['validSkill']=NULL;
+            $result_json=json_encode($skill_recognise);
+            echo $result_json;
+            exit();
+        }
+
+        if(count($skill_recognise['data'])===0){
+            $skill_recognise['validSkill']=false;
+            $result_json=json_encode($skill_recognise);
+            echo $result_json;
+            exit();
+        }
+
+        $skillid = $skill_recognise['data'][0]['skillid'];
+
+        // Delete this and all Child Skills:
+        deleteSkillForUser($skillid,$current_user->getId());
+
+        $result['deleted']=true;
+        $result_json=json_encode($result);
+        echo $result_json;
+        exit();
+    }
+
 ?>
