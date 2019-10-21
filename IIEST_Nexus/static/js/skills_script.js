@@ -82,11 +82,11 @@ $(document).ready(function()
     {
         var inputVal = $(this).val();
         var resultDropdown = $(this).siblings(".result");
-        resultDropdown.empty();
         if(inputVal.length)
         {
             $.get("async/skills_async.php", {skillSearch: inputVal}).done(function(skill_suggest_json)
             {
+                resultDropdown.empty();
                 skill_suggest_array=JSON.parse(skill_suggest_json);
                 if(skill_suggest_array.length===0)
                 {
@@ -103,6 +103,9 @@ $(document).ready(function()
                     }
                 }
             });
+        }
+        else {
+            resultDropdown.empty();
         }
     });
 
