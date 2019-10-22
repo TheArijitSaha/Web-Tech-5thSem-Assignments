@@ -137,30 +137,38 @@ $(document).ready(function()
             if(!result.executed){
                 if(result.validSkill===true){
                     if(result.errorInfo[1]===1062){
-                        $('.search-box').parent().parent().parent().append(
-                            create_alert_string(skillName + ' is already registered to you!','warning','search-alert')
-                        );
-                        $("#search-alert").css("margin","10px 0px");
+                        this_alert=$(create_alert_string(skillName + ' is already registered to you!','warning','search-alert'));
+                        $('.search-box').parent().parent().parent().append(this_alert);
+                        this_alert.css("margin","10px 0px");
+                        this_alert.fadeTo(2000, 0).slideUp(500,function(){
+                            $(this).remove();
+                        });
                         return;
                     }
                 }
-                $('.search-box').parent().parent().parent().append(
-                    create_alert_string('SQL ERROR! Contact Developers.','primary','search-alert')
-                );
-                $("#search-alert").css("margin","10px 0px");
+                this_alert=$(create_alert_string('SQL ERROR! Contact Developers.','primary','search-alert'));
+                $('.search-box').parent().parent().parent().append(this_alert);
+                this_alert.css("margin","10px 0px");
+                this_alert.fadeTo(2000, 0).slideUp(500,function(){
+                    $(this).remove();
+                });
             }
             else if(result.validSkill===false){
-                $('.search-box').parent().parent().parent().append(
-                    create_alert_string(skillName + ' is not a valid Skill!','danger','search-alert')
-                );
-                $("#search-alert").css("margin","10px 0px");
+                this_alert=$(create_alert_string(skillName + ' is not a valid Skill!','danger','search-alert'));
+                $('.search-box').parent().parent().parent().append(this_alert);
+                this_alert.css("margin","10px 0px");
+                this_alert.fadeTo(2000, 0).slideUp(500,function(){
+                    $(this).remove();
+                });
             }
             else if(result.errorInfo===null){
-                $('.search-box').parent().parent().parent().append(
-                    create_alert_string('Skill \"'+skillName+'\" Added Successfully','success','search-alert')
-                );
-                $("#search-alert").css("margin","10px 0px");
-                // Reload My SKills:
+                this_alert=$(create_alert_string('Skill \"'+skillName+'\" Added Successfully','success','search-alert'));
+                $('.search-box').parent().parent().parent().append(this_alert);
+                this_alert.css("margin","10px 0px");
+                this_alert.fadeTo(2000, 0).slideUp(500,function(){
+                    $(this).remove();
+                });
+                // Reload My Skills:
                 $.get("async/skills_async.php",{showMy:true}).done(showMySkills);
             }
 
@@ -193,23 +201,29 @@ $(document).ready(function()
             if(result.executed===false)
             {
                 // SQL Error
-                $('.search-box').parent().parent().parent().append(
-                    create_alert_string('SQL ERROR! Contact Developers.','primary','search-alert')
-                );
-                $("#search-alert").css("margin","10px 0px");
+                this_alert=$(create_alert_string('SQL ERROR! Contact Developers.','primary','search-alert'));
+                $('.search-box').parent().parent().parent().append(this_alert);
+                this_alert.css("margin","10px 0px");
+                this_alert.fadeTo(2000, 0).slideUp(500,function(){
+                    $(this).remove();
+                });
             }
             else if(result.validSkill===false){
                 // Not a valid Skill
-                $('.search-box').parent().parent().parent().append(
-                    create_alert_string(skillName + ' is not a valid Skill!','danger','search-alert')
-                );
-                $("#search-alert").css("margin","10px 0px");
+                this_alert=$(create_alert_string(skillName + ' is not a valid Skill!','danger','search-alert'));
+                $('.search-box').parent().parent().parent().append(this_alert);
+                this_alert.css("margin","10px 0px");
+                this_alert.fadeTo(2000, 0).slideUp(500,function(){
+                    $(this).remove();
+                });
             }
             else if(result.deleted===true){
-                $('.search-box').parent().parent().parent().append(
-                    create_alert_string('Skill \"'+skillName+'\" and all its Children Skills Deleted Successfully','primary','search-alert')
-                );
-                $("#search-alert").css("margin","10px 0px");
+                this_alert=$(create_alert_string('Skill \"'+skillName+'\" and all its Children Skills Deleted Successfully','primary','search-alert'));
+                $('.search-box').parent().parent().parent().append(this_alert);
+                this_alert.css("margin","10px 0px");
+                this_alert.fadeTo(2000, 0).slideUp(500,function(){
+                    $(this).remove();
+                });
             }
             $.get("async/skills_async.php",{showMy:true}).done(showMySkills);
         });
