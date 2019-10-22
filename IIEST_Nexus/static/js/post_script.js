@@ -12,6 +12,42 @@ function create_alert_string(message, alertClass, id){
 }
 
 function construct_post_string(post){
+    let t = post.posted_at.split(/[- :]/);
+    let d = new Date(Date.UTC(t[0], t[1]-1, t[2], t[3], t[4], t[5]));
+    let d_ist = new Date(d.getTime()+(-330)*60*1000);
+    let diff=Date.now()-d_ist;
+    let agoString;
+    if(diff<60000){
+        let q=Math.floor((diff)/1000);
+        agoString=q+' sec'
+        if(q!=1)
+            agoString+='s';
+        agoString+=' ago'
+    }
+    else if(diff<60*60000){
+        let q=Math.floor((diff)/(60000));
+        agoString=q+' min'
+        if(q!=1)
+            agoString+='s';
+        agoString+=' ago'
+    }
+    else if(diff<24*60*60000){
+        let q=Math.floor((diff)/(60*60000));
+        agoString=q+' hr'
+        if(q!=1)
+            agoString+='s';
+        agoString+=' ago'
+    }
+    else if(diff<7*24*60*60000){
+        let q=Math.floor((diff)/(24*60*60000));
+        agoString=q+' day'
+        if(q!=1)
+            agoString+='s';
+        agoString+=' ago'
+    }
+    else{
+        agoString=d_ist.toDateString();
+    }
     f='<div class="card">' +
         '<div class="card-body">' +
             '<div class="row">' +
@@ -24,7 +60,7 @@ function construct_post_string(post){
                 '</div>' +
                 '<div class="col-sm-3">' +
                     '<span style="float:right;">' +
-                        post.posted_at +
+                        agoString +
                     '</span>' +
                 '</div>' +
             '</div>' +
@@ -90,7 +126,9 @@ $(document).ready(function()
                 });
             }
             else {
-                console.log('ho rah ahi');
+                // Empty the postbox
+                $('#postContent').val("");
+                //Reload the posts
                 $.post("async/post_async.php",{showAllPost:true}).done(showMyPosts);
             }
         });
