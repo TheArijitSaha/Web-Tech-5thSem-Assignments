@@ -104,7 +104,7 @@ $(document).ready(function()
         var postContent = $('#postContent').val();
         if (postContent.length<1)
         {
-            this_alert=$(create_alert_string('No content in Post!','primary','search-alert'));
+            this_alert=$(create_alert_string('No content in Post!','primary',''));
             this_alert.insertBefore($(this).parent());
             this_alert.css("margin","10px 0px");
             this_alert.fadeTo(2000, 0).slideUp(500,function(){
