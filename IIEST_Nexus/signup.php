@@ -10,7 +10,15 @@ if (isset($_POST['signup']))
     $dob        = date_create($_POST['dob']);
     $dob        = date_format($dob,"Y/m/d");
 
-    if (!DataBase::query('SELECT email FROM '.DataBase::$user_table_name.' WHERE email=:email', array(':email'=>$email))["executed"])
+    $query_result = DataBase::query('SELECT email FROM '.DataBase::$user_table_name.' WHERE email=:email', array(':email'=>$email));
+    if ($query_result['executed']===false)
+    {
+        echo "ERROR: Could not able to execute SQL<br>";
+        print_r($query_result['errorInfo']);
+        exit();
+    }
+
+    if (count($query_result['data'])===0)
     {
         if (preg_match("/^[a-zA-Z'. -]+$/", $name))
         {
@@ -19,7 +27,8 @@ if (isset($_POST['signup']))
                 if (filter_var($email, FILTER_VALIDATE_EMAIL))
                 {
                     // Insert New Records into DataBase
-                    DataBase::query('INSERT INTO '.DataBase::$user_table_name.' VALUES (:name,:email,:dob,DEFAULT,:password)', array(':name'=>$name,':email'=>$email,':dob'=>$dob,':password'=>password_hash($password, PASSWORD_BCRYPT)));
+                    DataBase::query('INSERT INTO '.DataBase::$user_table_name.' VALUES (:name,:email,:dob,DEFAULT,:password)',
+                                    array(':name'=>$name,':email'=>$email,':dob'=>$dob,':password'=>password_hash($password, PASSWORD_BCRYPT)));
 
                     // Log the new user in and direct to feed
                     $crypto_strong = True;

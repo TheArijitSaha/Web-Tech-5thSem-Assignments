@@ -54,3 +54,22 @@
 .skill-show{
     width: inherit;
 }
+
+.skillList{
+    /* list-style: none; */
+}
+
+.skillItem{
+    margin: 2px;
+    display:inline-block;
+    border: 1px white solid;
+    border-radius: 10px;
+}
+
+.skillItem.delete{
+    /* border: 1px red solid; */
+}
+
+.skillItem span{
+    margin: inherit;
+}
