@@ -47,13 +47,6 @@ if($temp['executed'])
                 else {
                     echo $current_user->getName();
                 }
-        ?>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-        <?php
-
                         $username = "";
                         $userid = "";
                         $res=array();
@@ -107,20 +100,28 @@ if($temp['executed'])
                             <?php
                                 $followerid = $logged_in_as->getID();
                                 $userid = $current_user->getID();
-                                if($compared && $following)
+                                if($compared)
                                 {
+                                    if($compared && $following)
+                                    {
                             ?>
-                                    <input type="submit" name="follow"  value="Follow">
+                                        <input type="submit" name="follow"  value="Follow">
+                                        <input type = "button" name = "message" value = "message" onclick="window.location.href='sendmessage.php?recid=<?php echo $userid; ?>';"/>
                             <?php
-                                }
-                                else if ($following==0)
-                                {
+                                    }
+                                    else if ($following==0)
+                                    {
                             ?>
-                                    <input type="submit" name="unfollow" value="Unfollow">
+                                        <input type="submit" name="unfollow" value="Unfollow">
+                                        <input type = "button" name = "message" value = "message" onclick="window.location.href='sendmessage.php?recid=<?php echo $userid; ?>';"/>
                             <?php
+                                    }
                                 }
                             ?>
                     </form>
-
+                    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+                    <script src="static/js/skills_script.js"></script>
     </body>
 </html>
