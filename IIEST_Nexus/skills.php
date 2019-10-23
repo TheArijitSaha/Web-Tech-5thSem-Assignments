@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 
 <?php
-require_once('classes/LoginClass.php');
-require_once('classes/User.php');
-require_once('classes/variables.php');
-require_once('classes/NexusNav.php');
+    require_once('classes/LoginClass.php');
+    require_once('classes/User.php');
+    require_once('classes/variables.php');
+    require_once('classes/NexusNav.php');
 
-$logged_in_id = LoginClass::isLoggedIn();
+    $logged_in_id = LoginClass::isLoggedIn();
 
-if (! $logged_in_id)
-{
-    header("Location: welcome.php");
-    exit();
-}
+    if (! $logged_in_id)
+    {
+        header("Location: welcome.php");
+        exit();
+    }
 
-$current_user = new User($logged_in_id);
+    $current_user = new User($logged_in_id);
 
 ?>
 

@@ -2,15 +2,15 @@
 
 <?php
 
-require_once('classes/LoginClass.php');
-require_once('classes/variables.php');
-require_once('classes/NexusNav.php');
+    require_once('classes/LoginClass.php');
+    require_once('classes/variables.php');
+    require_once('classes/NexusNav.php');
 
-if (LoginClass::isLoggedIn())
-{
-    header("Location: feed.php");
-    exit();
-}
+    if (LoginClass::isLoggedIn())
+    {
+        header("Location: feed.php");
+        exit();
+    }
 
 ?>
 
