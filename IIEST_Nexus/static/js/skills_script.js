@@ -194,10 +194,8 @@ $(document).ready(function()
     //for deleting a skill:
     $(document).on("click","#deleteSkillItem",function(){
         var skillName = $(this).parent().children("#skillName").html();
-        console.log(skillName);
         $.get("async/skills_async.php",{deleteSkill:skillName}).done(function(result_json){
             let result=JSON.parse(result_json);
-            console.log(result);
             if(result.executed===false)
             {
                 // SQL Error
