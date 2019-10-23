@@ -4,18 +4,18 @@ class DataBase
 {
 
     ////////////////////////////////IIESTS DB///////////////////////////////////
-    private static $host_name='localhost';
-    private static $database_name='btech2017';
-    private static $database_username='btech2017';
-    private static $database_password='btech2017';
-    //////////////////////////////////////////////////////////////////////////
+    // private static $host_name='localhost';
+    // private static $database_name='btech2017';
+    // private static $database_username='btech2017';
+    // private static $database_password='btech2017';
+    ////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////Arijit's Home DB/////////////////////////////////
-    // private static $host_name='localhost';
-    // private static $database_name='IIESTNexus';
-    // private static $database_username='PPLab';
-    // private static $database_password='PPRox';
-    // ////////////////////////////////////////////////////////////////////////////
+    private static $host_name='localhost';
+    private static $database_name='IIESTNexus';
+    private static $database_username='PPLab';
+    private static $database_password='PPRox';
+    ////////////////////////////////////////////////////////////////////////////
 
     // Table Names:
     public static $user_table_name          = "ASARGUsers";
@@ -23,9 +23,6 @@ class DataBase
     public static $skill_reg_table_name     = "ASARGSkillReg";
     public static $token_table_name         = "asargtokens";
     public static $posts_table_name         = "ASARGPosts";
-    public static $follower_table_name      = "ASARGFollowers";
-    public static $message_table_name       = "ASARGMessages";
-
 
     private static function connect()
     {
