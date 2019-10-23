@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 
 <?php
-    require_once('classes/LoginClass.php');
-    require_once('classes/User.php');
-    require_once('classes/variables.php');
-    require_once('classes/NexusNav.php');
-    require_once('classes/DataBase.php');
+require_once('classes/LoginClass.php');
+require_once('classes/User.php');
+require_once('classes/variables.php');
+require_once('classes/NexusNav.php');
+require_once('classes/DataBase.php');
 
-    $logged_in_id = LoginClass::isLoggedIn();
+$logged_in_id = LoginClass::isLoggedIn();
 
-    if (! $logged_in_id)
-    {
-        header("Location: welcome.php");
-        exit();
-    }
+if (! $logged_in_id)
+{
+    header("Location: welcome.php");
+    exit();
+}
 
-    $current_user = new User($logged_in_id);
+$current_user = new User($logged_in_id);
 
 ?>
 
@@ -28,63 +28,8 @@
         <link rel="stylesheet" href="static/css/feed_master.css">
     </head>
     <body>
-        <!-- Navbar Begins-->
+        <!-- Navbar -->
         <?php echo NexusNav::insertNavbar(); ?>
-        <!-- Navbar Ends-->
-
-        <div class="container-fluid">
-            <div class="row">
-                <!-- Left Column Begin-->
-                <div class="col-sm-3">
-                    <div class="container">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="form-group">
-                                    <textarea class="form-control" name="postbody" id="postContent" placeholder="Enter your thoughts here"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <button type="button" class="form-control btn btn-primary" name="createPost" id="postCreateBtn">Share</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <p>Welcome to your feed <?php //echo $current_user->getName(); ?></p>
-
-                </div>
-                <!-- Left Column End -->
-
-                <!-- Middle Column Begin-->
-                <div class="col-sm-7">
-                    <!-- Posting -->
-                    <div class="container">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="form-group">
-                                    <textarea class="form-control" name="postbody" id="postContent" placeholder="Enter your thoughts here"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <button type="button" class="form-control btn btn-primary" name="createPost" id="postCreateBtn">Share</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Posting Ends -->
-
-                    <!-- Post List: -->
-                    <div class="container">
-                        <div class="postBox">
-
-                        </div>
-                    </div>
-
-                    <!-- Post List Ends -->
-
-
-                </div>
-                <!-- Middle Column End -->
-
-            </div>
-        </div>
 
         <!-- <div class="container">
             <div class="jumbotron">
@@ -93,6 +38,29 @@
         </div> -->
 
 
+        <!-- Posting -->
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <div class="form-group">
+                        <textarea class="form-control" name="postbody" id="postContent" placeholder="Enter your thoughts here"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="form-control btn btn-primary" name="createPost" id="postCreateBtn">Share</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Posting Ends -->
+
+        <!-- Post List: -->
+        <div class="container">
+            <div class="postBox">
+
+            </div>
+        </div>
+
+        <!-- Post List Ends -->
 
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
