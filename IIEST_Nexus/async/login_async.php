@@ -37,7 +37,7 @@
                 setcookie("SNID_", $token, time() + 60*60*24*3, NetworkVariables::$cookie_path, NULL, NULL, TRUE);
                 $result['executed']=true;
                 $result['message']="Successfully Logged In!";
-                $result['redirectLink']=NetworkVariables::$home_path.'/feed.php';
+                $result['redirectLink']=NetworkVariables::$home_path.'feed.php';
                 echo json_encode($result);
                 exit();
             }
