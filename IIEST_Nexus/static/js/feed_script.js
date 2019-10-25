@@ -3,6 +3,13 @@
 // Bolden a substring within a string
 function boldenedString(main,sub){
     let pos=main.toLowerCase().indexOf(sub.toLowerCase());
+    if(pos!=0){
+        pos=main.toLowerCase().indexOf(' '+sub.toLowerCase());
+        if(pos==-1){
+            pos=main.toLowerCase().indexOf('('+sub.toLowerCase());
+        }
+        pos=pos+1;
+    }
     return main.substr(0,pos)+'<strong>'+main.substr(pos,sub.length)+'</strong>'+main.substr(pos+sub.length);
 }
 
@@ -266,6 +273,7 @@ $(document).ready(function(){
         }
     });
 
+    // FOr updating input with clicked Skill
     $(document).on("click",".result p#skilloption", function(){
         $(this).parents(".search-box").find('input[type="text"]').val($(this).text());
         $(this).parent(".result").empty();

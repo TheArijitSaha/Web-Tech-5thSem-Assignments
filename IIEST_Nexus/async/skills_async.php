@@ -64,8 +64,7 @@
 
 
     // To get JSON of My Skills:
-    if(isset($_GET['showMy']))
-    {
+    if(isset($_GET['showMy'])){
         $result = DataBase::query('SELECT a.skillid,skill,parent '.
                                   'FROM '.DATABASE::$skill_reg_table_name.' a,'.DATABASE::$skill_table_name.' b '.
                                   'WHERE a.skillid=b.skillid '.
@@ -87,8 +86,7 @@
 
 
     // To get JSON of all skills:
-    if(isset($_GET['showAll']))
-    {
+    if(isset($_GET['showAll'])){
         $result = DataBase::query('SELECT * FROM '.DataBase::$skill_table_name);
 
         if ($result['executed']===false)
@@ -106,13 +104,20 @@
 
 
     // To get JSON of suggestions of skills:
-    if( isset($_GET["skillSearch"]) )
-    {
-        $inputString="%".strtolower($_GET["skillSearch"])."%";
-        $result = DataBase::query('SELECT * FROM '.DataBase::$skill_table_name.' '.
-                                  'WHERE LOWER(skill) LIKE :inputString '.
-                                  'ORDER BY skill LIMIT 10',
-                            array(':inputString'=>$inputString));
+    if( isset($_GET["skillSearch"]) ){
+        $inputString1=strtolower($_GET["skillSearch"])."%";
+        $inputString2="% ".strtolower($_GET["skillSearch"])."%";
+        $inputString3="%(".strtolower($_GET["skillSearch"])."%";
+        $result = DataBase::query('SELECT * FROM '.DataBase::$skill_table_name.
+                                  ' WHERE LOWER(skill) LIKE :inputString1'.
+                                    ' OR LOWER(skill) LIKE :inputString2'.
+                                    ' OR LOWER(skill) LIKE :inputString3'.
+                                  ' ORDER BY skill LIMIT 10',
+                            array(':inputString1'=>$inputString1,
+                                  ':inputString2'=>$inputString2,
+                                  ':inputString3'=>$inputString3
+                                )
+                        );
 
         if ($result['executed']===false)
         {
@@ -128,8 +133,7 @@
 
 
     // To add a skill:
-    if(isset($_GET['addSkill']))
-    {
+    if(isset($_GET['addSkill'])){
         $skill_recognise = DataBase::query('SELECT skillid FROM '.DataBase::$skill_table_name.' '.
                                            'WHERE skill=:skill',
                                         array(':skill'=>$_GET['addSkill'])

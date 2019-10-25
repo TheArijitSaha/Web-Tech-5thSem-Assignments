@@ -1,6 +1,13 @@
 //Helper Functions:
 function boldenedString(main,sub){
     let pos=main.toLowerCase().indexOf(sub.toLowerCase());
+    if(pos!=0){
+        pos=main.toLowerCase().indexOf(' '+sub.toLowerCase());
+        if(pos==-1){
+            pos=main.toLowerCase().indexOf('('+sub.toLowerCase());
+        }
+        pos=pos+1;
+    }
     return main.substr(0,pos)+'<strong>'+main.substr(pos,sub.length)+'</strong>'+main.substr(pos+sub.length);
 }
 
