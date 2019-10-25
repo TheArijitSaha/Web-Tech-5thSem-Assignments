@@ -1,5 +1,11 @@
 //Helper Functions:
 
+// Bolden a substring within a string
+function boldenedString(main,sub){
+    let pos=main.toLowerCase().indexOf(sub.toLowerCase());
+    return main.substr(0,pos)+'<strong>'+main.substr(pos,sub.length)+'</strong>'+main.substr(pos+sub.length);
+}
+
 // To create an alert div with message provided
 function create_alert_string(message, alertClass, id){
     f='<div class="alert alert-'+ alertClass + ' alert-dismissible fade show" role="alert" id="' + id + '">' +
@@ -73,9 +79,21 @@ function construct_post_string(post){
     return f;
 }
 
+function construct_search_result_string(result,searchString="",bolden=false){
+    f='<div class="card">' +
+        '<div class="card-body">' +
+            '<div class="card-text">' +
+                '<a href=\"profile.php?userid=' + result.id + '\">' +
+                    ( bolden ? boldenedString(result.name,searchString) : result.name ) +
+                '</a>' +
+            '</div>' +
+        '</div>' +
+    '</div>';
+    return f;
+}
 
-$(document).ready(function()
-{
+
+$(document).ready(function(){
 
     //for loading posts
     function showMyPosts(post_list_json){
@@ -134,6 +152,138 @@ $(document).ready(function()
         });
     });
 
+
+
+
+
+    // For changing placeholder of search bar
+    $('input[name="searchPeopleOption"]').on("change", function(){
+        $('.peopleSearchResult').empty();
+        $('input[name="peopleSearch"]').val('');
+        if($('input[name="searchPeopleOption"]:checked').val()==='bySkill'){
+            $('input[name="peopleSearch"]').attr('placeholder','Enter Skill');
+        }
+        else{
+            $('input[name="peopleSearch"]').attr('placeholder','Enter Name');
+        }
+    });
+
+
+    //for searching people
+    $('#searchPeopleBtn').on("click", function(){
+        let searchOption = $('input[name="searchPeopleOption"]:checked').val();
+        let searchString = $('input[name="peopleSearch"]').val();
+        if(searchString.length<1){
+            $('.peopleSearchResult').empty();
+            return;
+        }
+        if(searchOption==='bySkill')
+        {
+            // Search by Skill
+            $.post("async/skills_async.php", {searchBySkill: searchString}).done(function(search_result_json){
+                search_result=JSON.parse(search_result_json);
+                if(search_result.executed===false){
+                    return;
+                }
+                $('.peopleSearchResult').empty();
+                for(x in search_result.data){
+                    $('.peopleSearchResult').append(construct_search_result_string(search_result.data[x]));
+                }
+                // If there are no such people
+                if(search_result.data.length<1){
+                    $('.peopleSearchResult').append('<div class="card">' +
+                                                        '<div class="card-body">' +
+                                                            '<div class="card-text">' +
+                                                                'No results Found' +
+                                                            '</div>' +
+                                                        '</div>' +
+                                                    '</div>');
+                }
+            });
+        }
+        else
+        {
+            // Search by Name
+            $.post("async/skills_async.php", {searchByName: searchString}).done(function(search_result_json){
+                search_result=JSON.parse(search_result_json);
+                if(search_result.executed===false){
+                    return;
+                }
+                $('.peopleSearchResult').empty();
+                for(x in search_result.data){
+                    $('.peopleSearchResult').append(construct_search_result_string(search_result.data[x],searchString,true));
+                }
+                // If there are no such people
+                if(search_result.data.length<1){
+                    $('.peopleSearchResult').append('<div class="card">' +
+                                                        '<div class="card-body">' +
+                                                            '<div class="card-text">' +
+                                                                'No results Found' +
+                                                            '</div>' +
+                                                        '</div>' +
+                                                    '</div>');
+                }
+            });
+        }
+
+
+    });
+
+
+
+
+    //for searching skills
+    $('input[name="peopleSearch"]').on("input", function()
+    {
+        if($('input[name="searchPeopleOption"]:checked').val()==='byName')
+            return;
+        var inputVal = $(this).val();
+        var resultDropdown = $(this).siblings(".result");
+        if(inputVal.length)
+        {
+            $.get("async/skills_async.php", {skillSearch: inputVal}).done(function(skill_suggest_json)
+            {
+                resultDropdown.empty();
+                skill_suggest_array=JSON.parse(skill_suggest_json);
+                if(skill_suggest_array.length===0)
+                {
+                    resultDropdown.html('<p>There are no skills like \"<em>'+inputVal+'</em>\"</p>')
+                }
+                else
+                {
+                    for(x in skill_suggest_array)
+                    {
+                        if(resultDropdown.html())
+                            resultDropdown.html(resultDropdown.html()+'<p id=\"skilloption\">'+boldenedString(skill_suggest_array[x].skill,inputVal)+'</p>');
+                        else
+                            resultDropdown.html('<p id=\"skilloption\">'+boldenedString(skill_suggest_array[x].skill,inputVal)+'</p>');
+                    }
+                }
+            });
+        }
+        else {
+            resultDropdown.empty();
+        }
+    });
+
+    $(document).on("click",".result p#skilloption", function(){
+        $(this).parents(".search-box").find('input[type="text"]').val($(this).text());
+        $(this).parent(".result").empty();
+    });
+
+
+    // For clearing the list when other part of document is clicked:
+    function closeAllLists(element){
+        var x = document.getElementsByClassName("result");
+        for (i in x){
+            if (element!=x[i]) {
+                x[i].innerHTML="";
+            }
+        }
+    }
+    document.addEventListener("click",function(e){
+        closeAllLists(e.target);
+    });
 
 
 });
