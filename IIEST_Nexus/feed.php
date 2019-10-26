@@ -73,6 +73,11 @@
 
                 <!-- Left Column End -->
 
+
+
+
+
+
                 <!-- Middle Column Begin-->
                 <div class="col-sm-6">
 
@@ -101,6 +106,9 @@
 
                 </div>
                 <!-- Middle Column End -->
+
+
+
 
                 <!-- Right Column Begin -->
                 <div class="col-sm-3" id="rightColumn">

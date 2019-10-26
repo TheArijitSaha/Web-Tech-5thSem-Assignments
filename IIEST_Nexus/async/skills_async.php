@@ -63,6 +63,27 @@
     }
 
 
+    // To get JSON of Someone's Skills with ID:
+    if(isset($_GET['showIDSkills'])){
+        $result = DataBase::query('SELECT a.skillid,skill,parent '.
+                                  'FROM '.DATABASE::$skill_reg_table_name.' a,'.DATABASE::$skill_table_name.' b '.
+                                  'WHERE a.skillid=b.skillid '.
+                                      'AND a.Userid=:userid',
+                                  array(':userid'=>$_GET['id'])
+                              );
+        if ($result['executed']===false)
+        {
+            echo "ERROR: Could not able to execute SQL<br>";
+            print_r($result['errorInfo']);
+        }
+        else
+        {
+            $result_json=json_encode($result['data']);
+            echo $result_json;
+        }
+    }
+
+
     // To get JSON of My Skills:
     if(isset($_GET['showMy'])){
         $result = DataBase::query('SELECT a.skillid,skill,parent '.
