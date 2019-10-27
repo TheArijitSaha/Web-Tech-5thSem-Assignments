@@ -8,15 +8,10 @@
 
     $logged_in_id = LoginClass::isLoggedIn();
 
-    if (! $logged_in_id)
-    {
-        // Someone is trying to access this php file and inspect its content
-        // through direct URL.
-        header("Location: index.php");
-        exit();
-    }
-
-    $current_user = new User($logged_in_id);
+    if( ! $logged_in_id)
+        $current_user = NULL;
+    else
+        $current_user = new User($logged_in_id);
 
     // Function to get parent of skill
     function parent($skillid){
@@ -86,6 +81,10 @@
 
     // To get JSON of My Skills:
     if(isset($_POST['showMy'])){
+        if($current_user===NULL){
+            echo "ERROR: Not Logged In!";
+            exit();
+        }
         $result = DataBase::query('SELECT a.skillid,skill,parent '.
                                   'FROM '.DATABASE::$skill_reg_table_name.' a,'.DATABASE::$skill_table_name.' b '.
                                   'WHERE a.skillid=b.skillid '.
@@ -155,6 +154,10 @@
 
     // To add a skill:
     if(isset($_POST['addSkill'])){
+        if($current_user===NULL){
+            echo "ERROR: Not Logged In!";
+            exit();
+        }
         $skill_recognise = DataBase::query('SELECT skillid FROM '.DataBase::$skill_table_name.' '.
                                            'WHERE skill=:skill',
                                         array(':skill'=>$_POST['addSkill'])
@@ -201,6 +204,10 @@
     // To Delete a skill:
     if( isset($_POST['deleteSkill']))
     {
+        if($current_user===NULL){
+            echo "ERROR: Not Logged In!";
+            exit();
+        }
         $skill_recognise = DataBase::query('SELECT skillid FROM '.DataBase::$skill_table_name.' '.
                                            'WHERE skill=:skill',
                                         array(':skill'=>$_POST['deleteSkill'])

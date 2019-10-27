@@ -112,7 +112,9 @@
                                 <h5><a  class='emailTile' href="mailto:<?php echo $profile_user->getEmail(); ?>"><?php echo $profile_user->getEmail(); ?></a></h5>
                                 <p class='infoTile'><strong>Birthday :</strong> <?php echo date('d F, Y',$profile_user->getDOB()->getTimestamp()); ?></p>
                                 <input type="number" name="profileID" value="<?php echo $profile_user->getID(); ?>" hidden>
-                                <input type="number" name="currentLoginID" value="<?php echo $logged_in_user->getID(); ?>" hidden>
+                                <?php if($logged_in_user!==NULL){ ?>
+                                    <input type="number" name="currentLoginID" value="<?php echo $logged_in_user->getID(); ?>" hidden>
+                                <?php } ?>
                                 <p class='infoTile'><strong>Followers: </strong><?php echo $profile_user->noOfFollowers(); ?></p>
                                 <p class='infoTile'><strong>Following: </strong><?php echo $profile_user->noOfFollowing(); ?></p>
                             </div>
