@@ -45,13 +45,23 @@
                                               ':password'=>password_hash($password, PASSWORD_BCRYPT))
                                     );
 
+                        // Get userid
+                        $user_id = DataBase::query('SELECT id FROM '.DataBase::$user_table_name.
+                        ' WHERE email=:email',
+                        array(':email'=>$email)
+                        )['data'][0]['id'];
+
+
+                        // Add themselves as followers of their own
+                        $result = DataBase::query('INSERT INTO '.DataBase::$follow_table_name.' (userid,followerid)'.
+                                                  ' VALUES (:userid, :followerid)',
+                                                  array(':userid'=>$user_id,
+                                                        ':followerid'=>$user_id)
+                                                );
+
                         // Log the new user in and redirect to feed
                         $crypto_strong = True;
                         $token = bin2hex(openssl_random_pseudo_bytes(64, $crypto_strong));
-                        $user_id = DataBase::query('SELECT id FROM '.DataBase::$user_table_name.
-                                                    ' WHERE email=:email',
-                                                    array(':email'=>$email)
-                                            )['data'][0]['id'];
 
                         DataBase::query('INSERT INTO '.DataBase::$token_table_name.
                                         ' VALUES (DEFAULT, :token, :userid)',

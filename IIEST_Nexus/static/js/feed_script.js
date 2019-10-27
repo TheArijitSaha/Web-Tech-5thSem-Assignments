@@ -117,7 +117,7 @@ $(document).ready(function(){
             $('.postBox').append(post_node);
         }
     }
-    $.post("async/post_async.php",{showAllPost:true}).done(showMyPosts);
+    $.post("async/post_async.php",{showFollowingPost:true}).done(showMyPosts);
 
 
 

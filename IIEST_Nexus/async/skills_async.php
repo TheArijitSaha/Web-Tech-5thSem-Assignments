@@ -64,12 +64,12 @@
 
 
     // To get JSON of Someone's Skills with ID:
-    if(isset($_GET['showIDSkills'])){
+    if(isset($_POST['showIDSkills'])){
         $result = DataBase::query('SELECT a.skillid,skill,parent '.
                                   'FROM '.DATABASE::$skill_reg_table_name.' a,'.DATABASE::$skill_table_name.' b '.
                                   'WHERE a.skillid=b.skillid '.
                                       'AND a.Userid=:userid',
-                                  array(':userid'=>$_GET['id'])
+                                  array(':userid'=>$_POST['id'])
                               );
         if ($result['executed']===false)
         {
@@ -85,7 +85,7 @@
 
 
     // To get JSON of My Skills:
-    if(isset($_GET['showMy'])){
+    if(isset($_POST['showMy'])){
         $result = DataBase::query('SELECT a.skillid,skill,parent '.
                                   'FROM '.DATABASE::$skill_reg_table_name.' a,'.DATABASE::$skill_table_name.' b '.
                                   'WHERE a.skillid=b.skillid '.
@@ -107,7 +107,7 @@
 
 
     // To get JSON of all skills:
-    if(isset($_GET['showAll'])){
+    if(isset($_POST['showAll'])){
         $result = DataBase::query('SELECT * FROM '.DataBase::$skill_table_name);
 
         if ($result['executed']===false)
@@ -125,10 +125,10 @@
 
 
     // To get JSON of suggestions of skills:
-    if( isset($_GET["skillSearch"]) ){
-        $inputString1=strtolower($_GET["skillSearch"])."%";
-        $inputString2="% ".strtolower($_GET["skillSearch"])."%";
-        $inputString3="%(".strtolower($_GET["skillSearch"])."%";
+    if( isset($_POST["skillSearch"]) ){
+        $inputString1=strtolower($_POST["skillSearch"])."%";
+        $inputString2="% ".strtolower($_POST["skillSearch"])."%";
+        $inputString3="%(".strtolower($_POST["skillSearch"])."%";
         $result = DataBase::query('SELECT * FROM '.DataBase::$skill_table_name.
                                   ' WHERE LOWER(skill) LIKE :inputString1'.
                                     ' OR LOWER(skill) LIKE :inputString2'.
@@ -154,10 +154,10 @@
 
 
     // To add a skill:
-    if(isset($_GET['addSkill'])){
+    if(isset($_POST['addSkill'])){
         $skill_recognise = DataBase::query('SELECT skillid FROM '.DataBase::$skill_table_name.' '.
                                            'WHERE skill=:skill',
-                                        array(':skill'=>$_GET['addSkill'])
+                                        array(':skill'=>$_POST['addSkill'])
                                     );
 
         if($skill_recognise['executed']===false){
@@ -199,11 +199,11 @@
 
 
     // To Delete a skill:
-    if( isset($_GET['deleteSkill']))
+    if( isset($_POST['deleteSkill']))
     {
         $skill_recognise = DataBase::query('SELECT skillid FROM '.DataBase::$skill_table_name.' '.
                                            'WHERE skill=:skill',
-                                        array(':skill'=>$_GET['deleteSkill'])
+                                        array(':skill'=>$_POST['deleteSkill'])
                                     );
 
         if($skill_recognise['executed']===false){

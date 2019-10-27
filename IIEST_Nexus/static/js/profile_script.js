@@ -98,7 +98,7 @@ $(document).ready(function(){
         f+='</ul>';
         $('.skill-show').html(f);
     }
-    $.get("async/skills_async.php",{showIDSkills:true,id:parseInt($('input[name="profileID"]').val())}).done(showSkills);
+    $.post("async/skills_async.php",{showIDSkills:true,id:parseInt($('input[name="profileID"]').val())}).done(showSkills);
 
 
 
@@ -108,7 +108,7 @@ $(document).ready(function(){
         var resultDropdown = $(this).siblings(".result");
         if(inputVal.length)
         {
-            $.get("async/skills_async.php", {skillSearch: inputVal}).done(function(skill_suggest_json)
+            $.post("async/skills_async.php", {skillSearch: inputVal}).done(function(skill_suggest_json)
             {
                 resultDropdown.empty();
                 skill_suggest_array=JSON.parse(skill_suggest_json);
@@ -157,7 +157,7 @@ $(document).ready(function(){
     // For Adding a new Skill:
     $('#skillAddBtn').click(function(){
         var skillName = $('.search-box input[name="skillSearch"]').val();
-        $.get("async/skills_async.php",{addSkill:skillName}).done(function(result_json){
+        $.post("async/skills_async.php",{addSkill:skillName}).done(function(result_json){
             let result=JSON.parse(result_json);
             if(!result.executed){
                 if(result.validSkill===true){
@@ -198,7 +198,7 @@ $(document).ready(function(){
                     $(this).remove();
                 });
                 // Reload My Skills:
-                $.get("async/skills_async.php",{showMy:true}).done(showSkills);
+                $.post("async/skills_async.php",{showMy:true}).done(showSkills);
             }
 
         });
@@ -222,11 +222,11 @@ $(document).ready(function(){
     }
 
 
-    //for deleting a skill:
+    // For deleting a skill:
     if( parseInt($('input[name="profileID"]').val()) === parseInt($('input[name="currentLoginID"]').val()) ){
         $(document).on("click","#deleteSkillItem",function(){
             var skillName = $(this).parent().children("#skillName").html();
-            $.get("async/skills_async.php",{deleteSkill:skillName}).done(function(result_json){
+            $.post("async/skills_async.php",{deleteSkill:skillName}).done(function(result_json){
                 let result=JSON.parse(result_json);
                 if(result.executed===false)
                 {
@@ -258,11 +258,78 @@ $(document).ready(function(){
                         $(this).remove();
                     });
                 }
-                $.get("async/skills_async.php",{showMy:true}).done(showSkills);
+                $.post("async/skills_async.php",{showMy:true}).done(showSkills);
             });
         });
     }
 
 
+    // For Following a person:
+    $('#followBtn').on("click",function(){
+        $.post("async/follow_async.php",{follow:parseInt($('input[name="profileID"]').val())}).done(function(result_json){
+            let result=JSON.parse(result_json);
+            if(!result.executed){
+                if(result.hasOwnProperty('errorInfo')){
+                    // Duplicate Entry:
+                    if(result.errorInfo[1]===1062){
+                        this_alert=$(create_alert_string('You already follow <strong>'+$('#profileName').text()+'</strong>','warning','follow-alert'));
+                        $('.errorBox').empty();
+                        $('.errorBox').append(this_alert);
+                        this_alert.css("margin","10px 0px");
+                        this_alert.fadeTo(3000, 0).slideUp(500,function(){
+                            $(this).remove();
+                        });
+                        return;
+                    }
+                }
+                // Wrong User ID
+                this_alert=$(create_alert_string(result.errorMessage,'primary','follow-alert'));
+                $('.errorBox').empty();
+                $('.errorBox').append(this_alert);
+                this_alert.css("margin","10px 0px");
+                this_alert.fadeTo(3000, 0).slideUp(500,function(){
+                    $(this).remove();
+                });
+            }
+            this_alert=$(create_alert_string('Now following <strong>'+$('#profileName').text()+'</strong>','success','follow-alert'));
+            $('.errorBox').empty();
+            $('.errorBox').append(this_alert);
+            this_alert.css("margin","10px 0px");
+            this_alert.fadeTo(3000, 0).slideUp(500,function(){
+                $(this).remove();
+            });
+            // Change Buttons
+            $('#followBtn').attr('hidden',true);
+            $('#unfollowBtn').removeAttr('hidden');
+        });
+    });
+
+
+    // For Unfollowing a person:
+    $('#unfollowBtn').on("click",function(){
+        $.post("async/follow_async.php",{unfollow:parseInt($('input[name="profileID"]').val())}).done(function(result_json){
+            let result=JSON.parse(result_json);
+            if(!result.executed){
+                // Wrong User ID
+                this_alert=$(create_alert_string(result.errorMessage,'primary','follow-alert'));
+                $('.errorBox').empty();
+                $('.errorBox').append(this_alert);
+                this_alert.css("margin","10px 0px");
+                this_alert.fadeTo(3000, 0).slideUp(500,function(){
+                    $(this).remove();
+                });
+            }
+            this_alert=$(create_alert_string('Stopped following <strong>'+$('#profileName').text()+'</strong>','dark','follow-alert'));
+            $('.errorBox').empty();
+            $('.errorBox').append(this_alert);
+            this_alert.css("margin","10px 0px");
+            this_alert.fadeTo(3000, 0).slideUp(500,function(){
+                $(this).remove();
+            });
+            // Change Buttons
+            $('#unfollowBtn').attr('hidden',true);
+            $('#followBtn').removeAttr('hidden');
+        });
+    });
 
 });

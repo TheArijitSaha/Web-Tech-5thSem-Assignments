@@ -32,15 +32,6 @@
             $profile_user = $logged_in_user;
         }
     }
-    // if($current_user->getID()==$logged_in_as->getID())
-    //     $compared=0;
-    //
-    // $temp = DataBase::query('SELECT COUNT(*) FROM '.DataBase::$follower_table_name.' where user_id='.$current_user->getID().' and follower_id='.$logged_in_as->getID().';');
-    // if($temp['executed'])
-    // {
-    //     if($temp['data']==1)
-    //         $following=0;
-    // }
 ?>
 
 <html lang="en" dir="ltr">
@@ -91,11 +82,20 @@
                     </div>
 
                     <!-- Follow/Unfollow Form Begin -->
-                    <?php if( ($logged_in_user!==NULL) && ($logged_in_user->getID()!==$profile_user->getID()) ){ ?>
-                        <p></p>
-                        <div class="container">
-                            <button type="button" class="btn btn-dark" name="follow" id="followBtn">Follow</button>
-                        </div>
+                    <?php if( ($logged_in_user!==NULL) && ($logged_in_user->getID()!==$profile_user->getID()) ){
+                        if($logged_in_user->follows($profile_user->getID())){ ?>
+                            <p></p>
+                            <div class="container">
+                                <button type="button" class="btn btn-dark" name="follow" id="followBtn" hidden>Follow</button>
+                                <button type="button" class="btn btn-dark" name="follow" id="unfollowBtn">Unfollow</button>
+                            </div>
+                        <?php } else {?>
+                            <p></p>
+                            <div class="container">
+                                <button type="button" class="btn btn-dark" name="follow" id="followBtn">Follow</button>
+                                <button type="button" class="btn btn-dark" name="follow" id="unfollowBtn" hidden>Unfollow</button>
+                            </div>
+                        <?php } ?>
                     <?php } ?>
                     <!-- Follow/Unfollow Form End -->
                 </div>
@@ -108,11 +108,13 @@
                     <div class="container">
                         <div class="row identityBox">
                             <div class="col-sm-7">
-                                <h2 class='nameTile'><strong><?php echo $profile_user->getName(); ?></strong></h2>
+                                <h2 class='nameTile' id='profileName'><strong><?php echo $profile_user->getName(); ?></strong></h2>
                                 <h5><a  class='emailTile' href="mailto:<?php echo $profile_user->getEmail(); ?>"><?php echo $profile_user->getEmail(); ?></a></h5>
-                                <p class='dobTile'><strong>Birthday :</strong> <?php echo date('d F, Y',$profile_user->getDOB()->getTimestamp()); ?></p>
+                                <p class='infoTile'><strong>Birthday :</strong> <?php echo date('d F, Y',$profile_user->getDOB()->getTimestamp()); ?></p>
                                 <input type="number" name="profileID" value="<?php echo $profile_user->getID(); ?>" hidden>
                                 <input type="number" name="currentLoginID" value="<?php echo $logged_in_user->getID(); ?>" hidden>
+                                <p class='infoTile'><strong>Followers: </strong><?php echo $profile_user->noOfFollowers(); ?></p>
+                                <p class='infoTile'><strong>Following: </strong><?php echo $profile_user->noOfFollowing(); ?></p>
                             </div>
                             <div class="col-sm-5 errorBox">
 
@@ -163,89 +165,6 @@
             </div>
 
         </div>
-
-
-
-
-        <?php
-                // if($current_user->getID()==$logged_in_as->getID()){
-                //         $compared = 0;
-                //         echo 'Your Profile';
-                // }
-                // else {
-                //     echo $current_user->getName();
-                // }
-        ?>
-
-        <?php
-
-                        // $username = "";
-                        // $userid = "";
-                        // $res=array();
-                        // $followerid = $logged_in_as->getID();
-                        // $userid = $current_user->getID();
-                        // $username = $current_user->getName();
-                        // if($compared)
-                        // {
-                        //     if (isset($_GET['userid']))
-                        //     {
-                        //             if (DataBase::query('SELECT id FROM ASARGUsers WHERE id=:userid', array(':userid'=>$logged_in_as->getID())))
-                        //             {
-                        //                     if (isset($_POST['follow']))
-                        //                     {
-                        //
-                        //                             $res = DataBase::query('INSERT INTO '.DataBase::$follower_table_name.' VALUES (:userid, :followerid)', array(':userid'=>$userid, ':followerid'=>$followerid));
-                        //                             if($res['executed'])
-                        //                             {
-                        //                                 $following = 0;
-                        //                             }
-                        //                             else
-                        //                             {
-                        //                                 $following = 0;
-                        //
-                        //                             }
-                        //
-                        //                     }
-                        //                     else if(isset($_POST['unfollow']))
-                        //                     {
-                        //                         $res = DataBase::query('DELETE FROM '.DataBase::$follower_table_name.' where user_id = '.$userid.' and follower_id='.$followerid.';');
-                        //                         if($res['executed'])
-                        //                         {
-                        //                             $following = 1;
-                        //                         }
-                        //                         else
-                        //                         {
-                        //                             echo "Unable to unfollow user. Contact developers!";
-                        //                         }
-                        //                     }
-                        //             }
-                        //             else
-                        //             {
-                        //                 die('User not found!');
-                        //             }
-                        //
-                        //     }
-                        // }
-                    ?>
-                    <!-- <form action="profile.php?userid=<?php //echo $userid; ?>" method="post"> -->
-
-                            <?php
-                                // $followerid = $logged_in_as->getID();
-                                // $userid = $current_user->getID();
-                                // if($compared && $following)
-                                // {
-                            ?>
-                                    <!-- <input type="submit" name="follow"  value="Follow"> -->
-                            <?php
-                                // }
-                                // else if ($following==0)
-                                // {
-                            ?>
-                                    <!-- <input type="submit" name="unfollow" value="Unfollow"> -->
-                            <?php
-                                // }
-                            ?>
-                    <!-- </form> -->
 
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
