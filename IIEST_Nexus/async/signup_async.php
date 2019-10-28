@@ -38,7 +38,7 @@
                     {
                         // Insert New Records into DataBase
                         DataBase::query('INSERT INTO '.DataBase::$user_table_name.
-                                        ' VALUES (:name,:email,:dob,DEFAULT,:password)',
+                                        ' VALUES (:name,:email,:dob,DEFAULT,:password,FALSE)',
                                         array(':name'=>$name,
                                               ':email'=>$email,
                                               ':dob'=>$dob,
@@ -59,7 +59,7 @@
                                                         ':followerid'=>$user_id)
                                                 );
 
-                        // Log the new user in and redirect to feed
+                        // Log the new user in
                         $crypto_strong = True;
                         $token = bin2hex(openssl_random_pseudo_bytes(64, $crypto_strong));
 

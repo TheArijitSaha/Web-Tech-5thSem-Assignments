@@ -122,6 +122,7 @@ $(document).ready(function()
                 window.location.replace(result.redirectLink);
             }
         });
+        
     });
 
 
