@@ -36,11 +36,11 @@
             <div class="row">
                 <!-- Left Column Begin-->
                 <div class="col-sm-3" id="leftColumn">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="searchOptionDiv">
-                        <label class="btn btn-light active" id="searchByPeopleLabel">
+                    <div style="width:100%;" class="btn-group btn-group-toggle" data-toggle="buttons" id="searchOptionDiv">
+                        <label style="width:50%;" class="btn btn-light active" id="searchByPeopleLabel">
                             <input type="radio" name="searchPeopleOption" id="searchByPeople" value="byName" autocomplete="off" checked> Search By Name
                         </label>
-                        <label class="btn btn-light" id="searchBySkillLabel">
+                        <label style="width:50%;" class="btn btn-light" id="searchBySkillLabel">
                             <input type="radio" name="searchPeopleOption" id="searchBySkill" value="bySkill" autocomplete="off"> Search By Skill
                         </label>
                     </div>

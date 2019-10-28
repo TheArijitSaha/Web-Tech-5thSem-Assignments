@@ -51,9 +51,16 @@ function construct_post_string(post){
             agoString+='s';
         agoString+=' ago'
     }
-    else if(diff<7*24*60*60000){
+    else if(diff<30*24*60*60000){
         let q=Math.floor((diff)/(24*60*60000));
         agoString=q+' day'
+        if(q!=1)
+            agoString+='s';
+        agoString+=' ago'
+    }
+    else if(diff<365*24*60*60000){
+        let q=Math.floor((diff)/(30*24*60*60000));
+        agoString=q+' month'
         if(q!=1)
             agoString+='s';
         agoString+=' ago'
@@ -66,7 +73,10 @@ function construct_post_string(post){
             '<div class="row">' +
                 '<div class="col-sm-9">' +
                     '<h5 class="card-title">' +
-                        '<a href=\"profile.php?userid=' + post.userid + '\">' +
+                        '<a href="' + post.profilepic + '">' +
+                            '<img src="' + post.profilepic + '" alt="" width="30px" height="30px" style="border-radius:50%;">' +
+                        '</a>' +
+                        '<a class="card-link" href=\"profile.php?userid=' + post.userid + '\" style="padding-left:10px;">' +
                             post.username +
                         '</a>' +
                     '</h5>' +
@@ -90,7 +100,10 @@ function construct_search_result_string(result,searchString="",bolden=false){
     f='<div class="card">' +
         '<div class="card-body">' +
             '<div class="card-text">' +
-                '<a href=\"profile.php?userid=' + result.id + '\">' +
+                '<a href="' + result.profilepic + '">' +
+                    '<img src="' + result.profilepic + '" alt="" width="30px" height="30px" style="border-radius:50%;">' +
+                '</a>' +
+                '<a href=\"profile.php?userid=' + result.id + '\" style="padding-left: 8px;">' +
                     ( bolden ? boldenedString(result.name,searchString) : result.name ) +
                 '</a>' +
             '</div>' +
@@ -103,10 +116,9 @@ function construct_search_result_string(result,searchString="",bolden=false){
 $(document).ready(function(){
 
     //for loading posts
-    function showMyPosts(post_list_json){
+    function showPosts(post_list_json){
         $('.postBox').empty();
         post_list=JSON.parse(post_list_json);
-        // let f='<ul class="skillList">';
         if(post_list.data.length)
         {
             // If there are no posts
@@ -117,7 +129,7 @@ $(document).ready(function(){
             $('.postBox').append(post_node);
         }
     }
-    $.post("async/post_async.php",{showFollowingPost:true}).done(showMyPosts);
+    $.post("async/post_async.php",{showFollowingPost:true}).done(showPosts);
 
 
 
@@ -154,7 +166,7 @@ $(document).ready(function(){
                 // Empty the postbox
                 $('#postContent').val("");
                 //Reload the posts
-                $.post("async/post_async.php",{showAllPost:true}).done(showMyPosts);
+                $.post("async/post_async.php",{showAllPost:true}).done(showPosts);
             }
         });
     });

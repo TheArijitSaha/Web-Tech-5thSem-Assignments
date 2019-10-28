@@ -38,11 +38,12 @@
                     {
                         // Insert New Records into DataBase
                         DataBase::query('INSERT INTO '.DataBase::$user_table_name.
-                                        ' VALUES (:name,:email,:dob,DEFAULT,:password,FALSE)',
+                                        ' VALUES (:name,:email,:dob,DEFAULT,:password,:profilePicPath)',
                                         array(':name'=>$name,
                                               ':email'=>$email,
                                               ':dob'=>$dob,
-                                              ':password'=>password_hash($password, PASSWORD_BCRYPT))
+                                              ':password'=>password_hash($password, PASSWORD_BCRYPT)),
+                                              ':profilePicPath'=>'media/profile-placeholder.jpg'
                                     );
 
                         // Get userid

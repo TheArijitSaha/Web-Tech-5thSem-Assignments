@@ -7,11 +7,11 @@ class User
     private $id;
     private $name;
     private $email;
-    private $token_hash;
+    private $profilePicPath;
 
     public function __construct($id)
     {
-        $result = DataBase::query('SELECT name,id,email,dob'.
+        $result = DataBase::query('SELECT name,id,email,dob,profilepic'.
                                   ' FROM '.DataBase::$user_table_name.
                                   ' WHERE id=:id',
                                     array(':id'=>$id))['data'];
@@ -21,6 +21,7 @@ class User
             $this->name=NULL;
             $this->email=NULL;
             $this->dob=NULL;
+            $this->$profilePicPath=NULL;
             return;
         }
         $this->exists=True;
@@ -28,6 +29,7 @@ class User
         $this->name=$result[0]['name'];
         $this->email=$result[0]['email'];
         $this->dob=new DateTime($result[0]['dob']);
+        $this->profilePicPath=$result[0]['profilepic'];
     }
 
     public function isReal() {
@@ -48,6 +50,10 @@ class User
 
     public function getDOB() {
         return $this->dob;
+    }
+
+    public function getProfilePicPath() {
+        return $this->profilePicPath;
     }
 
     public function follows($following_id){

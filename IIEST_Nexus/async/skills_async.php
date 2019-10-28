@@ -244,7 +244,7 @@
     {
         $inputString1=strtolower($_POST["searchByName"])."%";
         $inputString2="% ".strtolower($_POST["searchByName"])."%";
-        $result = DataBase::query('SELECT name,id FROM '.DataBase::$user_table_name.' '.
+        $result = DataBase::query('SELECT name,id,profilepic FROM '.DataBase::$user_table_name.' '.
                                   'WHERE LOWER(name) LIKE :inputString1 '.
                                     'OR LOWER(name) LIKE :inputString2',
                             array(':inputString1'=>$inputString1,
@@ -267,7 +267,7 @@
     // To get JSON of Search By Skill:
     if(isset($_POST['searchBySkill']))
     {
-        $result = DataBase::query('SELECT name,id FROM '.DataBase::$user_table_name.','.DataBase::$skill_reg_table_name.','.DataBase::$skill_table_name.
+        $result = DataBase::query('SELECT name,id,profilepic FROM '.DataBase::$user_table_name.','.DataBase::$skill_reg_table_name.','.DataBase::$skill_table_name.
                                   ' WHERE UserID=id'.
                                     ' AND '.DataBase::$skill_table_name.'.skillid='.DataBase::$skill_reg_table_name.'.skillid'.
                                     ' AND LOWER(skill)=LOWER(:inputString)',

@@ -57,22 +57,7 @@
                 <!-- Left Column Begin -->
                 <div class="col-sm-3">
                     <div class="container relpos">
-                        <?php
-                            $query_result = DataBase::query('SELECT profilepic FROM '.DataBase::$user_table_name.
-                                                            ' WHERE id=:id',
-                                                            array(':id'=>$profile_user->getID()));
-                            if($query_result[data][0][profilepic]==0){
-                                $profile_pic_path = 'media/profile-placeholder.jpg';
-                            }
-                            else{
-                                foreach(OtherVariables::$image_extensions as $ext){
-                                    if(file_exists('media/profiles/PROFILE_'.strval($profile_user->getID()).'.'.$ext)){
-                                        $profile_pic_path = 'media/profiles/PROFILE_'.strval($profile_user->getID()).'.'.$ext;
-                                    }
-                                }
-                            }
-                        ?>
-                        <img class="profileImage" src="<?php echo $profile_pic_path;?>" alt="Error">
+                        <img class="profileImage" src="<?php echo $profile_user->getProfilePicPath();?>" alt="Error">
                         <?php if( ($logged_in_user!==NULL) && ($logged_in_user->getID()===$profile_user->getID()) ){ ?>
                             <form id="profilePicForm" action="sync/pic_upload.php" method="post" enctype="multipart/form-data">
                                 <label for="profilePicUpload" class="editProfile btn btn-dark">Change</label>

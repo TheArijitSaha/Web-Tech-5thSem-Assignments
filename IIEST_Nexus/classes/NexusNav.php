@@ -40,17 +40,7 @@ class NexusNav
             $query_result = DataBase::query('SELECT profilepic FROM '.DataBase::$user_table_name.
                                             ' WHERE id=:id',
                                             array(':id'=>$id));
-            if($query_result[data][0][profilepic]==0){
-                $profile_pic_path = 'media/profile-placeholder.jpg';
-            }
-            else{
-                foreach(OtherVariables::$image_extensions as $ext){
-                    if(file_exists('media/profiles/PROFILE_'.strval($id).'.'.$ext)){
-                        $profile_pic_path = 'media/profiles/PROFILE_'.strval($id).'.'.$ext;
-                    }
-                }
-            }
-            $retString=$retString.'<img src="'.$profile_pic_path.'" width="30px" height="30px" style="border-radius:50%;" alt="Me">';
+            $retString=$retString.'<img src="'.$query_result[data][0][profilepic].'" width="30px" height="30px" style="border-radius:50%;" alt="Me">';
             $retString=$retString.self::$logged_in_part2;
         }
         $retString=$retString.'</nav>';

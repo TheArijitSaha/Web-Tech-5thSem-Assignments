@@ -22,7 +22,7 @@
     // Save Profile Picture
     if(isset($_FILES['profilePicUpload'])){
         $imageFileType = strtolower(pathinfo($_FILES["profilePicUpload"]["name"],PATHINFO_EXTENSION));
-        $target_file = '../media/profiles/PROFILE_'.strval($current_user->getID()).'.'.$imageFileType;
+        $target_file = 'media/profiles/PROFILE_'.strval($current_user->getID()).'.'.$imageFileType;
 
         if ($_FILES["profilePicUpload"]["size"] > 1024*1024)
         {
@@ -41,25 +41,27 @@
             exit();
         }
 
-        if($query_result['data'][0]['profilepic']!=0){
-            if(!unlink($target_file)){
+        if($query_result['data'][0]['profilepic']!='media/profile-placeholder.jpg'){
+            if(!unlink('../'.$query_result['data'][0]['profilepic'])){
                 echo "ERROR: Could not Delete Previous Profile Photo<br>";
                 exit();
             }
         }
 
-        if( move_uploaded_file($_FILES["profilePicUpload"]["tmp_name"],$target_file) )
+        if( move_uploaded_file($_FILES["profilePicUpload"]["tmp_name"],'../'.$target_file) )
         {
             $query_result = DataBase::query('UPDATE '.DataBase::$user_table_name.
-                                            ' SET profilepic=TRUE'.
+                                            ' SET profilepic=:newPath'.
                                             ' WHERE id=:id',
-                                            array(':id'=>$current_user->getID()));
+                                            array(':id'=>$current_user->getID(),
+                                                  ':newPath'=>$target_file)
+                                    );
             header('Location: ../profile.php');
     	}
     	else
     	{
             $query_result = DataBase::query('UPDATE '.DataBase::$user_table_name.
-                                            ' SET profilepic=FALSE'.
+                                            ' SET profilepic="media/profile-placeholder.jpg'.
                                             ' WHERE id=:id',
                                             array(':id'=>$current_user->getID()));
             echo "ERROR: Could not Add File<br>";
