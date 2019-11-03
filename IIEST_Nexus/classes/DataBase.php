@@ -24,6 +24,7 @@ class DataBase
     public static $token_table_name         = "asargtokens";
     public static $posts_table_name         = "ASARGPosts";
     public static $follow_table_name        = "ASARGFollowers";
+    public static $message_table_name       = "ASARGMessages";
 
     private static function connect()
     {
@@ -36,7 +37,8 @@ class DataBase
 
     public static function query($query, $params = array())
     {
-        $statement=self::connect()->prepare($query);
+        $conn=self::connect();
+        $statement=$conn->prepare($query);
         if(!($statement->execute($params)))
         {
             return array("executed"=>False,"errorInfo"=>$statement->errorInfo(),"data"=>NULL);
@@ -45,6 +47,15 @@ class DataBase
         {
             $data=$statement->fetchAll();
             return array("executed"=>True,"errorInfo"=>$statement->errorInfo(),"data"=>$data);
+        }
+        if(explode(' ', $query)[0]=='INSERT') //checks if the first word of the query is insert
+        {
+            $statement=$conn->prepare('SELECT LAST_INSERT_ID()');
+            if(!($statement->execute(array()))){
+                return array("executed"=>False,"errorInfo"=>$statement->errorInfo(),"data"=>NULL);
+            }
+            $lastid=$statement->fetchAll()[0][0];
+            return array("executed"=>True,"errorInfo"=>NULL,"data"=>NULL,"lastID"=>$lastid);
         }
         return array("executed"=>True,"errorInfo"=>NULL,"data"=>NULL);
     }
