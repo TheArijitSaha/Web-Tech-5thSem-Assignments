@@ -33,6 +33,18 @@
         <?php echo NexusNav::insertNavbar(); ?>
         <!-- Navbar Ends-->
 
+        <?php if (isset($_POST[convoid])) {
+            $messageUser=new User($_POST[convoid]);
+            if($messageUser){ ?>
+                <input type="number" id="convoUserID" value="<?php echo $messageUser->getID(); ?>" hidden>
+                <input type="text" id="convoUserName" value="<?php echo $messageUser->getName(); ?>" hidden>
+            <?php }
+            echo '<script>'.
+                    'window.onload = function(){'.
+                        'history.replaceState("", "", "messages.php");'.
+                    '}'.
+            '</script>';
+        } ?>
         <div class="container-fluid messagingScreen">
             <div class="row messagingScreenRow">
                 <!-- Chat List Begins -->

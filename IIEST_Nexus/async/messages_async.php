@@ -18,6 +18,12 @@
 
     $current_user = new User($logged_in_id);
 
+    function messageSort($a,$b){
+        if ($a[sent_at]==$b[sent_at])
+            return 0;
+        return ($a[sent_at]<$b[sent_at])?1:-1;
+    }
+
 
     // To get JSON of Chat Users:
     if(isset($_POST['showChatUsers'])){
@@ -36,8 +42,7 @@
                                         ' GROUP BY sender'.
                                     ' ) AS m2'.
                                     ' ON m1.sender = m2.sender'.
-                                        ' AND sent_at = maxTime'.
-                                    ' ORDER BY sent_at DESC',
+                                        ' AND sent_at = maxTime',
                                     array(":thisuser"=>$current_user->getID())
                                 );
 
@@ -62,8 +67,7 @@
                                         ' GROUP BY receiver'.
                                     ' ) AS m2'.
                                     ' ON m1.receiver = m2.receiver'.
-                                        ' AND sent_at = maxTime'.
-                                    ' ORDER BY sent_at DESC',
+                                        ' AND sent_at = maxTime',
                                     array(":thisuser"=>$current_user->getID())
                                 );
 
@@ -99,7 +103,12 @@
             }
         }
 
-        echo json_encode($latest_messages);
+        $final_list=array();
+        foreach ($latest_messages as $key => $value){
+            array_push($final_list,$value);
+        }
+        usort($final_list,'messageSort');
+        echo json_encode($final_list);
     }
 
 

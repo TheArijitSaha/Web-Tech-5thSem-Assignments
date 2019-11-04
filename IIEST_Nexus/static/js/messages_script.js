@@ -82,88 +82,119 @@ function construct_message_bubble(message,id){
     return f;
 }
 
+// Function to load chats
+function showChats(chat_list_json){
+    $('.chatUsersList').empty();
+    chat_list=JSON.parse(chat_list_json);
+    if(chat_list.length===0)
+    {
+        // If there are no messages
+        $('.chatUsersList').append('<li class="person">' +
+                                        'You have no messages!' +
+                                   '</li>');
+    }
+
+    for(x in chat_list){
+        chat_node=$(constructChatUserString(chat_list[x]));
+        $('.chatUsersList').append(chat_node);
+    }
+}
+
+// Function to load conversation
+function load_conversation(){
+    if($("#convoUserID").length<1){
+        // No Selected User ID
+        return;
+    }
+    id=parseInt($("#convoUserID").val());
+
+    // Show Conversation
+    $.post("async/messages_async.php",{showConversation:id}).done(function(messages_json){
+        messages=JSON.parse(messages_json);
+        $('.chatBox').empty();
+        selectedUserNode = $('<div class="selectedUser">' +
+                                '<span class="name">' + $("#convoUserName").val() + '</span>' +
+                           '</div>'
+                        );
+        chatContainerNode = $('<div class="chatContainer"></div>');
+        messageList = $('<ul class="messageList chatContainerScroll"></ul>');
+
+        for(x in messages){
+            f = construct_message_bubble(messages[x],id)
+            $(messageList).append(f);
+        }
+        $(chatContainerNode).append(messageList);
+        newChatNode = $('<div class="chatForm form-group mt-3 mb-0">' +
+                            '<div class="container-fluid">' +
+                                '<div class="row">' +
+                                    '<div class="col">' +
+                                        '<textarea id="messageInput" class="form-control" rows="1" placeholder="Type your message here..."></textarea>' +
+                                    '</div>' +
+                                    '<div class="col-auto sendBtn btn btn-outline-success">' +
+                                        'Send' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>'
+                    );
+        $(chatContainerNode).append(newChatNode);
+        $('.chatBox').append(selectedUserNode);
+        $('.chatBox').append(chatContainerNode);
+        $(messageList).scrollTop($(messageList).prop('scrollHeight'));
+
+
+        // if user exists in chat list update it
+        if($('.person input[name="chateeid"][value="' + id + '"]').length>=1){
+            thisperson=$('.person input[name="chateeid"][value="' + id + '"]').parent();
+            $('.person').removeClass('activeUser');
+            $(thisperson).addClass('activeUser');
+        }
+
+        // Make the messages seen in databases
+        $.post("async/messages_async.php",{seenConversation:id}).done(function(){
+            // Reload Chats
+            // could be made faster by just removing unread Node
+            $.post("async/messages_async.php",{showChatUsers:true}).done(function(chat_list_json){
+                showChats(chat_list_json);
+                $('input[name="chateeid"][value="'+id+'"]').parent().addClass('activeUser');
+            });
+        });
+    });
+}
+
 
 
 $(document).ready(function(){
 
     //for loading Chat Users
-    function showChats(chat_list_json){
-        $('.chatUsersList').empty();
-        chat_list=JSON.parse(chat_list_json);
-        if(chat_list.length===0)
-        {
-            // If there are no messages
-            $('.chatUsersList').append('<li class="person">' +
-                                            'You have no messages!' +
-                                       '</li>');
-        }
-
-        for(x in chat_list){
-            chat_node=$(constructChatUserString(chat_list[x]));
-            $('.chatUsersList').append(chat_node);
-        }
-    }
     $.post("async/messages_async.php",{showChatUsers:true}).done(showChats);
 
+    // For loading Conversation at page load
+    load_conversation();
 
+    convReloader=setInterval(load_conversation,10000);
+
+    // For Selecting another User
     $(document).on('click','.person',function(){
-        id=parseInt($(this).children('input[name="chateeid"]').val());
-        thisperson=this;
-        $.post("async/messages_async.php",{showConversation:id}).done(function(messages_json){
-            messages=JSON.parse(messages_json);
-            $('.chatBox').empty();
-            selectedUserNode = $('<div class="selectedUser">' +
-                                    '<span class="name">' + $(thisperson).find('.name').text() + '</span>' +
-                               '</div>'
-                            );
-            chatContainerNode = $('<div class="chatContainer"></div>');
-            messageList = $('<ul class="messageList chatContainerScroll"></ul>');
-
-            for(x in messages){
-                f = construct_message_bubble(messages[x],id)
-                $(messageList).append(f);
-            }
-            $(chatContainerNode).append(messageList);
-            newChatNode = $('<div class="chatForm form-group mt-3 mb-0">' +
-                                '<div class="container-fluid">' +
-                                    '<div class="row">' +
-                                        '<div class="col">' +
-                                            '<textarea id="messageInput" class="form-control" rows="1" placeholder="Type your message here..."></textarea>' +
-                                        '</div>' +
-                                        '<div class="col-auto sendBtn btn btn-outline-success">' +
-                                            'Send' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
-                            '</div>'
-                        );
-            $(chatContainerNode).append(newChatNode);
-            $('.chatBox').append(selectedUserNode);
-            $('.chatBox').append(chatContainerNode);
-            $(messageList).scrollTop($(messageList).prop('scrollHeight'));
-            $('.person').removeClass('activeUser')
-            $(thisperson).addClass('activeUser');
-
-
-            // Make the messages seen in databases
-            $.post("async/messages_async.php",{seenConversation:id}).done(function(){
-                // Reload Chats
-                // could be made faster by just removing unread Node
-                $.post("async/messages_async.php",{showChatUsers:true}).done(function(chat_list_json){
-                    showChats(chat_list_json);
-                    $('input[name="chateeid"][value="'+id+'"]').parent().addClass('activeUser');
-                });
-            });
-        });
+        id=$(this).children('input[name="chateeid"]').val();
+        if($("#convoUserID").length<1){
+            $('body').prepend('<input type="number" id="convoUserID" value="' + id + '" hidden>');
+            $('body').prepend('<input type="text" id="convoUserName" value="' + $(this).find('.name').text() + '" hidden>');
+        }
+        else{
+            $("#convoUserID").attr('value',id);
+            $("#convoUserName").attr('value',$(this).find('.name').text());
+        }
+        load_conversation();
     });
 
-
+    // For Sending Message
     $(document).on('click','.sendBtn',function(){
         msg = $('#messageInput').val();
         if(!(/\S/.test(msg))){
             return;
         }
-        toid = parseInt($('.activeUser').find('input[name="chateeid"]').val());
+        toid = parseInt($('#convoUserID').val());
         $.post("async/messages_async.php",{sendMessage:toid,body:msg}).done(function(result_json){
             result=JSON.parse(result_json);
             $('#messageInput').val('');

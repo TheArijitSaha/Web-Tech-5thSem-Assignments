@@ -112,7 +112,6 @@
 
                 <!-- Right Column Begin -->
                 <div class="col-sm-3" id="rightColumn">
-                    <p>Do something else here losers</p>
                 </div>
                 <!-- Right Column End -->
 
