@@ -78,6 +78,7 @@ function construct_message_bubble(message,id){
                 '<div class="chatTime">' +
                     construct_time_stamp(message.sent_at) +
                 '</div>' +
+                '<input type="number" id="messageID" value="' + message.mid + '" hidden>' +
             '</li>';
     return f;
 }
@@ -162,6 +163,43 @@ function load_conversation(){
     });
 }
 
+// Function to load new messages in conversation
+function load_more_messages(){
+    if($("#convoUserID").length<1){
+        // No Selected User ID
+        return;
+    }
+    id=parseInt($("#convoUserID").val());
+    lastID=parseInt($('.messageList').children().last().find('#messageID').val());
+
+    // Post to get more messages
+    $.post("async/messages_async.php",{showMore:id,lastMessage:lastID}).done(function(messages_json){
+        messages=JSON.parse(messages_json);
+        if(messages.length<1){
+            return;
+        }
+        messageList = $('.messageList');
+
+        for(x in messages){
+            f = construct_message_bubble(messages[x],id)
+            $(messageList).append(f);
+        }
+        $(messageList).scrollTop($(messageList).prop('scrollHeight'));
+
+        // Make the messages seen in databases
+        $.post("async/messages_async.php",{seenConversation:id}).done(function(){
+            // Reload Chats
+            // could be made faster by just removing unread Node
+            $.post("async/messages_async.php",{showChatUsers:true}).done(function(chat_list_json){
+                showChats(chat_list_json);
+                $('input[name="chateeid"][value="'+id+'"]').parent().addClass('activeUser');
+            });
+        });
+    });
+}
+
+// Function to update Chats
+// Implement if time permits
 
 
 $(document).ready(function(){
@@ -172,7 +210,7 @@ $(document).ready(function(){
     // For loading Conversation at page load
     load_conversation();
 
-    convReloader=setInterval(load_conversation,10000);
+    convReloader=setInterval(load_more_messages,10000);
 
     // For Selecting another User
     $(document).on('click','.person',function(){

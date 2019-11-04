@@ -183,4 +183,27 @@
         }
     }
 
+    // To load more messages
+    if(isset($_POST['showMore'])){
+        $id=$_POST['showMore'];
+        $result = DataBase::query('SELECT *'.
+                                  ' FROM '.DataBase::$message_table_name.
+                                  ' WHERE mid>:lastID'.
+                                    ' AND ( (receiver=:me AND sender=:id)'.
+                                        ' OR (receiver=:id AND sender=:me) )',
+                                  array(":id"=>$id,
+                                        ":me"=>$current_user->getID(),
+                                        ":lastID"=>$_POST['lastMessage']
+                                    )
+                                );
+
+        if ($result['executed']===false)
+        {
+            echo "ERROR: Not able to execute SQL<br>";
+            print_r($result['errorInfo']);
+            exit();
+        }
+        echo json_encode($result[data]);
+    }
+
 ?>
