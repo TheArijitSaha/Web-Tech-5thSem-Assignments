@@ -17,6 +17,13 @@ class DataBase
     private static $database_password='PPRox';
     ////////////////////////////////////////////////////////////////////////////
 
+    /////////////////////////////Aditya's Home DB///////////////////////////////
+    // private static $host_name='localhost';
+    // private static $database_name='testdb';
+    // private static $database_username='root';
+    // private static $database_password='password';
+    ////////////////////////////////////////////////////////////////////////////
+
     // Table Names:
     public static $user_table_name          = "ASARGUsers";
     public static $skill_table_name         = "ASARGSkills";
@@ -25,6 +32,7 @@ class DataBase
     public static $posts_table_name         = "ASARGPosts";
     public static $follow_table_name        = "ASARGFollowers";
     public static $message_table_name       = "ASARGMessages";
+    public static $like_table_name			= "ASARGLikes";
 
     private static function connect()
     {
