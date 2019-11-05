@@ -1,5 +1,5 @@
 <?php
-    // PHP File for asynchronous requests of skills, if logged in.
+    // PHP File for asynchronous requests of messages, if logged in.
 
     require_once('../classes/DataBase.php');
     require_once('../classes/LoginClass.php');
